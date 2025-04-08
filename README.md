@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Register Funds Platform
 
 A web platform that connects schools with donors to improve STEAM education through targeted fundraising campaigns.
@@ -21,3 +22,6 @@ A web platform that connects schools with donors to improve STEAM education thro
 ## Getting Started
 
 ### Prerequisites
+=======
+# Register
+>>>>>>> bba782da9bc44ca37b6a0a7c5242fda0c33d553f
