@@ -1,4 +1,5 @@
 import { Campaign } from '../types/campaign';
+import { Link } from 'react-router-dom';
 
 interface FeaturedCampaignsProps {
   campaigns?: Campaign[];
@@ -22,7 +23,8 @@ export default function FeaturedCampaigns({ campaigns, loading, error }: Feature
             <div className="col-span-full text-center text-red-500 py-12">{errorMessage}</div>
           ) : (
             campaigns?.slice(0, 3).map((campaign, index) => (
-              <div 
+              <Link 
+                to={`/challenge/${campaign.id}`} 
                 key={campaign.id}
                 className={`bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow ${
                   index === 0 
@@ -109,7 +111,7 @@ export default function FeaturedCampaigns({ campaigns, loading, error }: Feature
                     </div>
                   </div>
                 )}
-              </div>
+              </Link>
             ))
           )}
         </div>

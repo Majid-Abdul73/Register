@@ -42,6 +42,25 @@ export default function DashboardPage() {
     studentPopulation: 0
   });
 
+  // Move these calculations inside useEffect to prevent infinite loops
+  useEffect(() => {
+    const userId = auth.currentUser?.uid;
+    if (!userId || campaignsLoading || schoolsLoading) return;
+
+    const userSchool = schools?.find(school => school.id === userId);
+    const userCampaigns = campaigns?.filter(campaign => campaign.schoolId === userId) || [];
+
+    // Calculate stats
+    const totalDonations = userCampaigns.reduce((sum, campaign) => sum + campaign.amountRaised, 0);
+    
+    setStats({
+      totalCampaigns: userCampaigns.length,
+      totalDonations,
+      studentPopulation: Number(userSchool?.studentPopulation || 0)
+    });
+  }, [campaigns, schools, campaignsLoading, schoolsLoading]); // Remove userCampaigns and userSchool from dependencies
+
+  // Move these outside useEffect since they're needed for rendering
   const userSchool = schools?.find(school => school.id === auth.currentUser?.uid);
   const userCampaigns: Campaign[] = campaigns?.filter(campaign => campaign.schoolId === auth.currentUser?.uid) || [];
 
@@ -52,43 +71,31 @@ export default function DashboardPage() {
   
   const completedSteps = [hasContactInfo, hasAddress, hasPopulation].filter(Boolean).length;
 
-  useEffect(() => {
-    const userId = auth.currentUser?.uid;
-    if (!userId || campaignsLoading || schoolsLoading) return;
-
-    // Calculate stats
-    const totalDonations = userCampaigns.reduce((sum, campaign) => sum + campaign.amountRaised, 0);
-    
-    setStats({
-      totalCampaigns: userCampaigns.length,
-      totalDonations,
-      studentPopulation: Number(userSchool?.studentPopulation || 0)
-    });
-  }, [campaigns, schools, campaignsLoading, schoolsLoading, userCampaigns, userSchool]);
-
   if (campaignsLoading || schoolsLoading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      
-      <div className="">
-      <DashboardHeader />
+      <div>
+        <DashboardHeader />
       </div>
       
-      <div className="flex pt-16">
-        <div className="w-60">
+      {/* Make the layout stack on mobile */}
+      <div className="flex flex-col md:flex-row pt-16">
+        {/* Sidebar - collapsible on mobile */}
+        <div className="w-full md:w-60 md:min-h-screen">
           <Sidebar />
         </div>
         
-        <div className="flex-1 p-8">
-          {/* Main Content */}
-          <div className="flex gap-8">
+        {/* Main content area */}
+        <div className="flex-1 p-4 md:p-8">
+          {/* Main Content - stack on mobile */}
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
             {/* Left Section */}
-            <div className="flex-[3] space-y-6">
+            <div className="w-full lg:flex-[3] space-y-6">
               {/* Header Card */}
-              <div className="bg-register-green/10 rounded-lg p-16">
+              <div className="bg-register-green/10 rounded-lg p-6 md:p-16">
                 <div className="flex items-center gap-2 text-gray-600 mb-2">
                   <img src="/images/location.svg" alt="" className="w-4 h-4" />
                   <span className="text-sm">
@@ -98,13 +105,13 @@ export default function DashboardPage() {
                     }
                   </span>
                 </div>
-                <h1 className="text-3xl font-bold text-register-green mb-4">
+                <h1 className="text-2xl md:text-3xl font-bold text-register-green mb-4">
                   {userCampaigns.length > 0 
                     ? userCampaigns[userCampaigns.length - 1].name
                     : userSchool?.schoolName
                   }
                 </h1>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <Link 
                     to="/profile" 
                     className="px-6 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors flex items-center gap-2"
@@ -140,9 +147,9 @@ export default function DashboardPage() {
                 <div className="space-y-4">
                   {userCampaigns.slice(0, 2).map(campaign => (
                     <div key={campaign.id} className="bg-white rounded-lg shadow-sm p-4">
-                      <div className="flex gap-6">
+                      <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                         {/* Campaign Image */}
-                        <div className="w-1/2 relative">
+                        <div className="w-full sm:w-1/2 relative">
                           <div className="aspect-[16/8] rounded-lg overflow-hidden">
                             <img 
                               src={campaign.mediaUrl || "/images/campaign-placeholder.jpg"} 
@@ -156,7 +163,7 @@ export default function DashboardPage() {
                         </div>
 
                         {/* Campaign Details */}
-                        <div className="w-1/2">
+                        <div className="w-full sm:w-1/2">
                           <div className="flex items-center gap-2 mb-2">
                             <img src="/images/location.svg" alt="" className="w-4 h-4" />
                             <span className="text-sm text-register-green">
@@ -184,24 +191,24 @@ export default function DashboardPage() {
             </div>
 
             {/* Right Section */}
-            <div className="flex-1 space-y-6">
+            <div className="w-full lg:flex-1 space-y-6">
               {/* Stats Card */}
               <div className="bg-white rounded-lg p-6">
-                <div className="space-y-2">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4">
                   <div>
-                    <h3 className="text-4xl font-bold text-register-green">
+                    <h3 className="text-3xl md:text-4xl font-bold text-register-green">
                       {String(stats.totalCampaigns).padStart(2, '0')}
                     </h3>
                     <p className="text-sm text-gray-600">Launched Campaigns</p>
                   </div>
                   <div>
-                    <h3 className="text-4xl font-bold text-register-green">
+                    <h3 className="text-3xl md:text-4xl font-bold text-register-green">
                       ${(stats.totalDonations / 1000).toFixed(1)}K
                     </h3>
                     <p className="text-sm text-gray-600">Donations Received</p>
                   </div>
                   <div>
-                    <h3 className="text-4xl font-bold text-register-green">
+                    <h3 className="text-3xl md:text-4xl font-bold text-register-green">
                       {stats.studentPopulation.toLocaleString()}
                     </h3>
                     <p className="text-sm text-gray-600">Students Population</p>
