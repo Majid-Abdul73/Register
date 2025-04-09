@@ -1,19 +1,16 @@
 import { lazy, Suspense, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useIndexedDB } from '../hooks/useIndexedDB';
 import { useCampaignData } from '../components/Data';
-import SchoolProfile from '../components/SchoolProfile';
 import QuickShare from '../components/QuickShare';
 
 const Navbar = lazy(() => import('../components/Navbar'));
 
 const ChallengePage = () => {
   const navigate = useNavigate();
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
   const { id } = useParams();
   const { getFromDB, saveToDB } = useIndexedDB();
