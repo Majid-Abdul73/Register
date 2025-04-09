@@ -11,7 +11,7 @@ interface QuickShareProps {
 }
 
 export default function QuickShare({ isOpen, onClose, campaign }: QuickShareProps) {
-  const [copied, setCopied] = useState(false);
+  const [copied0, setCopied] = useState(false);
 
   const handleCopy = async () => {
     try {
