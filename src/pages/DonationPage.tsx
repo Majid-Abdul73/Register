@@ -11,6 +11,9 @@ export default function DonationPage() {
   const { id } = useParams();
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState<'stripe' | 'apple' | null>(null);
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
 
   const { data: campaign, isLoading } = useQuery({
     queryKey: ['campaign', id],
@@ -33,9 +36,13 @@ export default function DonationPage() {
           variant="transparent" 
           className="fixed top-0 left-0 right-0 z-50"
           customLinks={[
+            // { to: "/campaigns", text: "Campaigns" },
+            // { to: "/#", text: "How It Works" },
+            // { to: "/#", text: "About Register" }
+
             { to: "/campaigns", text: "Campaigns" },
-            { to: "/#", text: "How It Works" },
-            { to: "/#", text: "About Register" }
+            { to: "/how-it-works", text: "How it Works" },
+            { to: "/about-us", text: "About Register" }
           ]}
         />
       </Suspense>
@@ -109,18 +116,104 @@ export default function DonationPage() {
             </div>
 
             {/* Description */}
-            <div className="bg-gray-50 p-4 rounded-lg">
+            <div className="bg-gray-50 p-4 rounded-lg mb-8">
               <p className="text-sm text-gray-600">
                 Your donation will support {campaign.name} in their mission to provide better educational facilities.
               </p>
             </div>
 
-            {/* Continue Button */}
-            <button
-              className="w-full bg-register-green text-white py-3 rounded-lg font-medium hover:bg-green-600 transition-colors"
-            >
-              Continue
-            </button>
+            {/* Payment Method Selection */}
+            <div className="space-y-4">
+              <h3 className="font-medium">Select Payment Method</h3>
+              
+              <div className="space-y-3">
+                <button
+                  onClick={() => setPaymentMethod('apple')}
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-lg border ${
+                    paymentMethod === 'apple' 
+                      ? 'border-register-green bg-register-green/5' 
+                      : 'border-gray-200'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <img src="/images/apple-pay.svg" alt="Apple Pay" className="w-14 h-10" />
+                    <span>Donate with Apple Pay</span>
+                  </div>
+                  <div className={`w-4 h-4 rounded-full border ${
+                    paymentMethod === 'apple' 
+                      ? 'border-4 border-register-green' 
+                      : 'border-gray-300'
+                  }`} />
+                </button>
+
+                <button
+                  onClick={() => setPaymentMethod('stripe')}
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-lg border ${
+                    paymentMethod === 'stripe' 
+                      ? 'border-register-green bg-register-green/5' 
+                      : 'border-gray-200'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <img src="/images/stripe.svg" alt="Credit Card" className="w-14 h-10" />
+                    <span>Donate with Credit or Debit</span>
+                  </div>
+                  <div className={`w-4 h-4 rounded-full border ${
+                    paymentMethod === 'stripe' 
+                      ? 'border-4 border-register-green' 
+                      : 'border-gray-300'
+                  }`} />
+                </button>
+              </div>
+            </div>
+
+            {/* Payment Details Form - Show only when stripe is selected */}
+            {paymentMethod === 'stripe' && (
+              <div className="space-y-4 mt-6">
+                <div>
+                  <label className="block text-sm mb-1">Email Address</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-register-green/20 focus:border-register-green"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm mb-1">Full name</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="John Doe"
+                    className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-register-green/20 focus:border-register-green"
+                  />
+                </div>
+                {/* Stripe Card Element will be inserted here */}
+                <div className="border border-gray-200 rounded-lg p-4">
+                  {/* Stripe Card Element Placeholder */}
+                  <div className="h-8 bg-gray-50 rounded"></div>
+                </div>
+              </div>
+            )}
+
+            {/* Total Amount */}
+            <div className="border-t pt-6 mt-6">
+              <div className="flex justify-between items-center mb-6">
+                <span className="text-gray-600">Your Total Donation</span>
+                <span className="text-xl font-semibold">
+                  ${selectedAmount || customAmount || '0.00'}
+                </span>
+              </div>
+
+              <button
+                className="w-full bg-register-green text-white py-3 rounded-lg font-medium hover:bg-green-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                disabled={!paymentMethod || (!selectedAmount && !customAmount)}
+              >
+                Donate
+              </button>
+            </div>
           </div>
         </div>
       </div>
