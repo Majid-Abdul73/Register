@@ -116,7 +116,7 @@ export default function LandingPage() {
         campaigns={recentCampaigns}
         loading={loading}
         error={error || undefined}
-        className='-mt-20'
+        className="-mt-16"
       />
 
       {/* Campaign Grid Section */}
