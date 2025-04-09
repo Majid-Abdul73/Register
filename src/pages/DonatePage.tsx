@@ -13,12 +13,6 @@ export default function DonatePage() {
   // Convert error to string for display
   const errorMessage = error instanceof Error ? error.message : String(error);
 
-  // Memoize featured campaigns
-  // const featuredCampaigns = useMemo(() => 
-  //   campaigns?.filter(campaign => campaign.featured),
-  //   [campaigns]
-  // );
-
   // Memoize categories
   const categories = useMemo(() => [
     { id: 'all', name: 'All' },
@@ -70,10 +64,11 @@ export default function DonatePage() {
         campaigns={campaigns}
         loading={loading}
         error={error || undefined}
+        className='mt-24'
       />
 
           {/* Campaign Grid Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-12">
         {categories.map(category => (
               <button

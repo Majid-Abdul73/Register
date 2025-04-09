@@ -1,16 +1,23 @@
-import { lazy, Suspense } from 'react';
-import { useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { lazy, Suspense, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+// import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useIndexedDB } from '../hooks/useIndexedDB';
+import { useCampaignData } from '../components/Data';
+import SchoolProfile from '../components/SchoolProfile';
+import QuickShare from '../components/QuickShare';
 
 const Navbar = lazy(() => import('../components/Navbar'));
 
 const ChallengePage = () => {
+  const navigate = useNavigate();
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const { id } = useParams();
   const { getFromDB, saveToDB } = useIndexedDB();
+  const { data } = useCampaignData();
 
   const { data: campaign, isLoading, error } = useQuery({
     queryKey: ['campaign', id],
@@ -59,167 +66,218 @@ const ChallengePage = () => {
   if (!campaign) return <div>Campaign not found</div>;
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="max-w-7xl mx-auto px-4 py-8"
-    >
+    <div className="max-w-7xl mx-auto px-4 py-8">
       <Suspense fallback={<div>Loading...</div>}>
         <Navbar variant="transparent" className="fixed top-0 left-0 right-0 z-50" />
       </Suspense>
 
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="mt-20"
-      >
+      <div className="mt-20">
         {/* Back Button */}
-        <button className="flex items-center gap-2 mb-4 text-gray-600">
+        <button className="flex items-center gap-2 mb-6 text-gray-600">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
           All Campaigns
         </button>
 
-        {/* Hero Section */}
-        <div className="relative h-96 rounded-xl overflow-hidden mb-8">
-          {/* Image Gallery */}
-          <div className="absolute bottom-16 left-8 flex gap-2">
-            {[1, 2, 3, 4].map((_, index) => (
-              <div key={index} className="w-16 h-16 rounded-lg overflow-hidden border-2 border-white">
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-12 gap-12">
+          {/* Part 1 & 2 - Main Content */}
+          <div className="col-span-8">
+            {/* Campaign Images */}
+            <div className="relative rounded-xl overflow-hidden mb-2">
+              <img
+                src={campaign.mediaUrl || ''}
+                alt=""
+                className="w-full h-[300px] object-cover"
+              />
+            </div>
+            
+            {/* Image Gallery */}
+            <div className="flex gap- mb-6">
+              {[1, 2, 3].map((_, index) => (
+                <div key={index} className="w-64 h-32 rounded-lg overflow-hidden border-2 border-white">
+                  <img
+                    src={campaign.mediaUrl}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+              <div className="w-64 h-32 rounded-lg overflow-hidden border-2 border-white bg-black/50 flex items-center justify-center text-white">
+                +24
                 <img
-                  src={campaign.mediaUrl || '/assets/images/campaign-placeholder.jpg'}
-                  alt=""
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8">
-            <span className="inline-block bg-green-500 text-white px-3 py-1 rounded-full text-sm mb-4">
-              {campaign.category}
-            </span>
-            <h1 className="text-4xl font-bold text-white mb-2">{campaign.name}</h1>
-            <div className="flex items-center gap-4 text-white">
-              <div className="flex items-center gap-2">
-                <img src="/images/location.svg" alt="" className="w-5 h-5" />
-                <span>{campaign.location?.city}, {campaign.location?.country}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <img 
-                  src={campaign.organizer?.profileImage || '/avatar.svg'} 
-                  alt="" 
-                  className="w-6 h-6 rounded-full"
-                />
-                <span>{campaign.organizer?.name || 'Anonymous'}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Campaign Details */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column */}
-          <div className="lg:col-span-2">
-            {/* Views Count */}
-            <div className="flex items-center gap-2 mb-6">
-              <div className="flex -space-x-2">
-                {[1, 2, 3].map((_, index) => (
-                  <div key={index} className="w-8 h-8 rounded-full border-2 border-white bg-gray-200" />
-                ))}
-              </div>
-              <span className="text-gray-600">{campaign.views || 24839} views</span>
-              <div className="ml-auto flex items-center gap-1">
-                <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span className="text-sm text-gray-600">24 hours live stream duration</span>
+                    src={campaign.mediaUrl}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
               </div>
             </div>
 
-            {/* About Section */}
-            <div className="bg-white rounded-xl p-6 shadow-sm mb-8">
-              <h2 className="text-2xl font-semibold mb-4">About this campaign</h2>
-              <p className="text-gray-600 whitespace-pre-wrap">{campaign.description}</p>
+               <div className="flex items-center gap-4 text-register-green mb-2">
+                <div className="flex items-center gap-2">
+                  <img src="/images/location.svg" alt="" className="w-5 h-5" />
+                  <span>{campaign.location?.city}, {campaign.location?.country}</span>
+                </div>
+              </div>
+              
+              <h1 className="text-2xl font-bold mb-8">{campaign.name}</h1>
+
+
+            {/* Campaign Info */}
+            <div className="mb-16">
+              <span className="bg-green-600 text-white text-md px-2 py-2 rounded-2xl text-sm mb-2 border-t">
+                {campaign.category}
+              </span>
             </div>
 
-            {/* Updates Section */}
-            <div className="bg-white rounded-xl p-6 shadow-sm mb-8">
-              <h2 className="text-2xl font-semibold mb-4">Updates</h2>
-              <div className="border-l-2 border-gray-200 pl-4 ml-4">
-                <div className="mb-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="font-medium">Today</span>
-                    <span className="text-gray-500">by {campaign.organizer?.name}</span>
-                  </div>
+            {/* Description */}
+            <div className="border-b-2 border-t-2 py-12">
+              <p className="text-gray-600 py-6">{campaign.description}</p>
+            </div>
+
+            {/* Updates */}
+            <div className="border-b-2 py-12">
+              <h2 className="text-xl font-semibold mb-4">Updates</h2>
+              <div className="space-y-4 mb-5">
+                <div className="flex items-start gap-3">
+                  <span className="text-sm text-gray-500">Today by {campaign.organizer?.name}</span>
                   <p className="text-gray-600">{campaign.updates?.[0] || 'No updates yet'}</p>
                 </div>
               </div>
-            </div>
 
-            {/* Organizer Section */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h2 className="text-xl font-semibold mb-4">Organizer</h2>
-              <div className="flex items-center gap-4">
-                <img
-                  src={campaign.organizer?.profileImage || '/avatar.svg'}
-                  alt=""
-                  className="w-12 h-12 rounded-full"
-                />
-                <div>
-                  <h3 className="font-medium">{campaign.organizer?.name}</h3>
-                  <p className="text-sm text-gray-600">on Behalf of</p>
-                  <p className="font-medium">{campaign.name}</p>
-                </div>
-                <button className="ml-auto text-register-green border border-register-green px-4 py-2 rounded-lg hover:bg-register-green/10">
-                  View Profile
+              <div className="grid grid-cols-2 gap-2 mb-6">
+                <button 
+                  onClick={() => navigate(`/donation/${campaign.id}`)}
+                  className="bg-register-green text-white py-3 rounded-lg font-medium"
+                >
+                  Donate
+                </button>
+                <button 
+                  onClick={() => setIsShareOpen(true)}
+                  className="bg-black text-white py-3 rounded-lg font-medium"
+                >
+                  Share
                 </button>
               </div>
             </div>
+
+            {/* Organizer */}
+            <div className="mb-6">
+              <h2 className="text-2xl font-semibold mb-8 pt-12">Organizer</h2>
+              <div className="flex items-center gap-4">
+                <img 
+                  src={'/avatar.svg'} 
+                  alt="" 
+                  className="w-6 h-6 rounded-full"
+                />
+                <div>
+                  <h3 className="font-medium">{campaign.organizer?.name}</h3>
+                  <p className="text-sm text-gray-500">makes this challenge campaign</p>
+                </div>
+              </div>
+              
+              <div className="mt-14">
+                <p className="text-lg text-gray-500">on Behalf of</p>
+                <h3 className="font-medium text-2xl mb-2">{campaign.name}</h3>
+                <div className="flex items-center gap-2 text-gray-600">
+                  <img src="/images/location.svg" alt="" className="w-5 h-5" />
+                  <span>{campaign.location?.city}, {campaign.location?.country}</span>
+                </div>
+                <button 
+                  onClick={() => setIsProfileOpen(true)} 
+                  className="mt-8 w-[250px] text-register-green border bg-register-green-light px-4 py-2 rounded-lg hover:bg-register-green/10 flex items-center justify-between"
+                >
+                  View School Profile
+                  <img src="/images/greater.svg" alt="" className="w-4 h-4 ml-2" />
+                </button>
+
+                <SchoolProfile
+                  isOpen={isProfileOpen}
+                  onClose={() => setIsProfileOpen(false)}
+                  school={{
+                    name: campaign.name,
+                    location: `${campaign.location?.city}, ${campaign.location?.country}`,
+                    address: campaign.location?.address || 'Address not available',
+                    totalStudents: campaign.schoolDetails?.studentPopulation || 0,
+                    challenges: campaign.schoolDetails?.challenges || ['No challenges listed'],
+                    representative: {
+                      name: campaign.organizer?.name || 'Not specified',
+                      role: 'School Representative'
+                    }
+                  }}
+                />
+              </div>
+            </div>
+
           </div>
 
-          {/* Right Column - Donation Box */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl p-6 shadow-sm sticky top-24">
+
+
+
+          {/* Part 3 - Donation Info */}
+          <div className="col-span-4">
+            <div className="bg-white rounded-xl p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] sticky ">
+              {/* Amount Raised */}
               <div className="mb-6">
-                {/* Amount Raised */}
-                <div className="flex items-baseline gap-1 mb-2">
-                  <h2 className="text-2xl font-bold">${campaign.amountRaised?.toLocaleString() || '24,839'}</h2>
-                  <span className="text-gray-600">raised</span>
-                </div>
-                
-                {/* Goal and Donation Count */}
-                <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                  <span>${campaign.goal?.toLocaleString() || '24,000'} Goal</span>
+                <h2 className="text-2xl font-bold mb-1">
+                  ${campaign.amountRaised?.toLocaleString()} raised
+                </h2>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <span>${campaign.goal?.toLocaleString()} Goal</span>
                   <span>•</span>
                   <span>{campaign.donationCount || '5k'} donations</span>
                 </div>
 
-                {/* Progress Bar */}
-                <div className="relative">
-                  <div className="absolute right-0 top-0 -translate-y-full mb-1 text-sm font-medium">
-                    {Math.min(Math.round((campaign.amountRaised / campaign.goal) * 100), 100) || 40}%
-                  </div>
-                  <div className="w-full h-2 bg-gray-100 rounded-full">
-                    <div 
-                      className="h-2 bg-register-green rounded-full"
-                      style={{ 
-                        width: `${Math.min((campaign.amountRaised / campaign.goal) * 100, 100)}%` 
-                      }}
+                {/* Progress Circle */}
+                <div className="relative w-16 h-16 ml-auto -mt-12">
+                  <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                    <path
+                      d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none"
+                      stroke="#E6E6E6"
+                      strokeWidth="3"
                     />
+                    <path
+                      d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none"
+                      stroke="#22C55E"
+                      strokeWidth="3"
+                      strokeDasharray={`${(campaign.amountRaised / campaign.goal) * 100}, 100`}
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center text-sm">
+                    40%
                   </div>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <button className="w-full bg-register-green text-white py-3 px-6 rounded-lg font-medium hover:bg-register-green/90 transition-colors mb-3">
+              <button className="w-full bg-register-green text-white py-3 rounded-lg font-medium mb-3">
                 Donate
               </button>
-              <button className="w-full bg-black text-white py-3 px-6 rounded-lg font-medium hover:bg-black/90 transition-colors mb-6">
+              {/* // Update the Share button: */}
+              <button 
+                onClick={() => setIsShareOpen(true)} 
+                className="w-full bg-black text-white py-3 rounded-lg font-medium mb-6"
+              >
                 Share
               </button>
-
-              {/* Donors List */}
+              
+              {/* // Add the QuickShare component: */}
+              <QuickShare
+                isOpen={isShareOpen}
+                onClose={() => setIsShareOpen(false)}
+                campaign={{
+                  name: campaign.name,
+                  url: window.location.href
+                }}
+              />
+              {/* Recent Donors */}
               <div>
                 <div className="flex items-center gap-2 mb-4">
                   <svg className="w-5 h-5 text-register-green" viewBox="0 0 20 20" fill="currentColor">
@@ -231,10 +289,10 @@ const ChallengePage = () => {
                 <div className="space-y-4">
                   {[
                     { name: 'Anonymous', amount: 50 },
-                    { name: 'Erica Johnson', amount: 50 },
-                    { name: 'Michael Smith', amount: 75 },
-                    { name: 'Clara Oswald', amount: 60 },
-                    { name: 'Liam Neeson', amount: 90 }
+                    // { name: 'Erica Johnson', amount: 50 },
+                    // { name: 'Michael Smith', amount: 75 },
+                    // { name: 'Clara Oswald', amount: 60 },
+                    // { name: 'Liam Neeson', amount: 90 }
                   ].map((donor, index) => (
                     <div key={index} className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-gray-200 rounded-full" />
@@ -250,32 +308,36 @@ const ChallengePage = () => {
           </div>
         </div>
 
-        {/* Other Campaigns Section */}
-        <div className="mt-16">
+        {/* Bottom Section - Other Campaigns */}
+        <div className="mt-24 border-t-2 py-12">
           <h2 className="text-2xl font-semibold mb-8">Other Campaigns</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[1, 2].map((_, index) => (
-              <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm">
-                <div className="h-48">
-                  <img
-                    src={campaign.mediaUrl || '/assets/images/campaign-placeholder.jpg'}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-medium mb-2">{campaign.name}</h3>
-                  <div className="flex justify-between text-sm">
-                    <span>Goal: ${campaign.goal?.toLocaleString()}</span>
-                    <span>Raised: ${campaign.amountRaised?.toLocaleString()}</span>
+          <div className="relative">
+            <div className="overflow-x-auto scrollbar-hide -mx-4 px-4">
+              <div className="flex gap-6" style={{ width: 'max-content' }}>
+                {data?.filter(c => c.id !== campaign.id).map((otherCampaign) => (
+                  <div key={otherCampaign.id} className="bg-white rounded-xl overflow-hidden shadow-sm" style={{ width: 'calc(50% - 12px)', minWidth: '400px' }}>
+                    <div className="h-48">
+                      <img
+                        src={otherCampaign.mediaUrl}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-medium mb-2">{otherCampaign.name}</h3>
+                      <div className="flex justify-between text-sm">
+                        <span>Goal: ${otherCampaign.goal?.toLocaleString()}</span>
+                        <span>Raised: ${otherCampaign.amountRaised?.toLocaleString()}</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 

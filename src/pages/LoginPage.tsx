@@ -35,12 +35,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex">
+    <div className="min-h-screen bg-white flex flex-col md:flex-row">
       {/* Left Section */}
-      <div className="w-1/2 bg-register-light p-8">
+      <div className="w-full md:w-1/2 bg-register-light p-4 md:p-8">
         <div className="max-w-md mx-auto">
-          
-          <Link to="/" className="flex items-center mb-14">
+          <Link to="/" className="flex items-center mb-8 md:mb-14">
             <span className="ml-1.5 font-semibold text-lg">Register</span>
             <div className="bg-register-green text-white text-xs font-semibold py-0.5 px-1.5 rounded">
               FUNDS
@@ -49,8 +48,8 @@ export default function LoginPage() {
           
           <p className="text-register-green text-sm mb-2">For School Administrators & Reps</p>
           
-          <h1 className="text-3xl font-bold mb-4">Lorem ipsum dolor sit amet consectetur eu quam</h1>
-          <div className="mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold mb-4">Lorem ipsum dolor sit amet consectetur eu quam</h1>
+          <div className="mb-4 hidden md:block">
             <img 
               src="/images/students-happy.jpg" 
               alt="Happy Students"
@@ -58,25 +57,25 @@ export default function LoginPage() {
             />
           </div>
           
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-sm hidden md:block">
             Lorem ipsum dolor sit amet consectetur. Semper enim scelerisque in pellentesque amet
           </p>
         </div>
       </div>
 
       {/* Right Section */}
-      <div className="w-1/2 p-8">
+      <div className="w-full md:w-1/2 p-4 md:p-8">
         <div className="max-w-md mx-auto">
-          <div className="text-right mb-8">
+          <div className="text-right mb-4 md:mb-8">
             <span className="text-sm text-gray-600">Don't have an account? </span>
             <Link to="/register" className="text-sm text-gray-900 font-medium hover:text-register-green">
               Sign up →
             </Link>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6">
             <div>
-              <h2 className="text-xl font-semibold mt-14">Sign into Register Funds</h2>
+              <h2 className="text-xl font-semibold mt-6 md:mt-14">Sign into Register Funds</h2>
               <p className="text-gray-600 text-sm">
                 Lorem ipsum dolor sit amet consectetur. Molestie leo nulla sed a facilisis aliquet massa.
               </p>

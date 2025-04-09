@@ -9,8 +9,8 @@ export interface Campaign {
   amountRaised: number;
   mediaUrl: string;
   schoolId: string;
-  featured: boolean;  // Added this property
-  status: string;     // Added this property
+  featured: boolean;
+  status: string;
   location?: {
     city: string;
     country: string;

@@ -116,10 +116,11 @@ export default function LandingPage() {
         campaigns={recentCampaigns}
         loading={loading}
         error={error || undefined}
+        className='-mt-10'
       />
 
       {/* Campaign Grid Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-12">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold">Recent</h2>

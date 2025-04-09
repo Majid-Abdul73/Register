@@ -5,13 +5,14 @@ interface FeaturedCampaignsProps {
   campaigns?: Campaign[];
   loading?: boolean;
   error?: Error | string;
+  className?: string;
 }
 
-export default function FeaturedCampaigns({ campaigns, loading, error }: FeaturedCampaignsProps) {
+export default function FeaturedCampaigns({ campaigns, loading, error, className }: FeaturedCampaignsProps) {
   const errorMessage = error instanceof Error ? error.message : String(error);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
+    <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 ${className || ''}`}>
       <div className="py-12">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-bold">Featured</h2>

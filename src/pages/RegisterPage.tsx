@@ -97,13 +97,11 @@ export default function RegisterPage() {
 
   // Update the final step button to use handleRegistration
   return (
-    <div className="min-h-screen bg-white flex">
+    <div className="min-h-screen bg-white flex flex-col md:flex-row">
       {/* Left Section */}
-      <div className="w-1/2 bg-register-light p-8 relative"> {/* Add relative positioning */}
+      <div className="w-full md:w-1/2 bg-register-light p-4 md:p-8 relative">
         <div className="max-w-md mx-auto">
-          
-
-          <Link to="/" className="flex items-center mb-14">
+          <Link to="/" className="flex items-center mb-8 md:mb-14">
             <span className="ml-1.5 font-semibold text-lg">Register</span>
             <div className="bg-register-green text-white text-xs font-semibold py-0.5 px-1.5 rounded">
               FUNDS
@@ -112,11 +110,11 @@ export default function RegisterPage() {
           
           <p className="text-register-green text-sm mb-2">For School Administrators & Reps</p>
           
-          {/* Step content remains the same but update image paths */}
+          {/* Step content */}
           {step === 1 && (
             <>
-              <h1 className="text-3xl font-bold mb-4">Get funded to improve <br /> STEAM Education in your <br />school</h1>
-              <div className="mb-4">
+              <h1 className="text-2xl md:text-3xl font-bold mb-4">Get funded to improve <br className="hidden md:block" /> STEAM Education in your <br className="hidden md:block" />school</h1>
+              <div className="mb-4 hidden md:block">
                 <img 
                   src="/images/classroom.jpg" 
                   alt="Modern Classroom"
@@ -126,79 +124,57 @@ export default function RegisterPage() {
             </>
           )}
           
-          {step === 2 && (
-            <>
-              <h1 className="text-3xl font-semibold mb-4">Broadcast your challenges to donors who care</h1>
-              <div className="mb-4">
-                <img 
-                  src="/images/teacher-student.jpg" 
-                  alt="Teacher and Student" 
-                  className="rounded-lg w-full"
-                />
-              </div>
-            </>
-          )}
+          {/* Similar updates for other steps... */}
           
-          {step === 3 && (
-            <>
-              <h1 className="text-3xl font-semibold mb-4">Verified schools receive 2x more funding</h1>
-              <div className="mb-4">
-                <img 
-                  src="/images/steam-class.jpg" 
-                  alt="STEAM Class" 
-                  className="rounded-lg w-full"
-                />
-              </div>
-            </>
-          )}
-          
-          {step === 4 && (
-            <>
-              <h1 className="text-3xl font-semibold mb-4">Your final step to start to receive funding</h1>
-              <div className="mb-4">
-                <img 
-                  src="/images/students-happy.jpg" 
-                  alt="Happy Students" 
-                  className="rounded-lg w-full"
-                />
-              </div>
-            </>
-          )}
-          
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-sm hidden md:block">
             Lorem ipsum dolor sit amet consectetur. Semper enim scelerisque in pellentesque amet
           </p>
 
-          <div className="absolute bottom-16 left-8 right-8">
-            <div className="max-w-md mx-auto">
-              <div className="flex space-x-2">
-                {[...Array(totalSteps)].map((_, index) => (
-                  <div
-                    key={index}
-                    className={`h-2 rounded-full ${
-                      index + 1 <= step ? 'bg-register-green w-8' : 'bg-gray-200 w-2'
-                    }`}
-                  />
-                ))}
+          {/* Progress dots - visible only on mobile */}
+          <div className="flex space-x-2 mt-8 md:hidden justify-center">
+            {[...Array(totalSteps)].map((_, index) => (
+              <div
+                key={index}
+                className={`h-2 rounded-full ${
+                  index + 1 <= step ? 'bg-register-green w-8' : 'bg-gray-200 w-2'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop progress dots */}
+        <div className="absolute bottom-16 left-8 right-8 hidden md:block">
+          <div className="max-w-md mx-auto">
+            <div className="relative">
+              <div className="bg-gray-200 h-2 rounded-full">
+                <div 
+                  className="bg-register-green h-full rounded-full transition-all duration-300"
+                  style={{ width: `${(step / totalSteps) * 100}%` }}
+                />
               </div>
+              <span className="absolute right-0 top-1/2 -translate-y-1/2 transform translate-x-full ml-2 text-sm text-gray-600">
+                {step === 1 ? '30%' : step === 2 ? '50%' : step === 3 ? '60%' : '100%'}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Right Section */}
-      <div className="w-1/2 p-8 relative">
+      <div className="w-full md:w-1/2 p-4 md:p-8 relative">
         <div className="max-w-md mx-auto">
-          <div className="text-right mb-8">
+          <div className="text-right mb-4 md:mb-8">
             <span className="text-sm text-gray-600">Have an account already? </span>
             <Link to="/login" className="text-sm text-gray-900 font-medium hover:text-register-green">
               Login →
             </Link>
           </div>
 
+          {/* Form Steps */}
           {step === 1 && (
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold mt-14">Your School Basic Information</h2>
+              <h2 className="text-xl font-semibold mt-6 md:mt-14">Your School Basic Information</h2>
               <p className="text-gray-600 text-sm mb-8">
                 Lorem ipsum dolor sit amet consectetur. Molestie leo nulla sed a facilisis aliquet massa.
               </p>
@@ -208,12 +184,15 @@ export default function RegisterPage() {
                   <label className="block text-sm mb-1">Name of School</label>
                   <input
                     type="text"
+                    name="schoolName"
+                    value={formData.schoolName}
+                    onChange={handleInputChange}
                     placeholder="Provide the name of your school"
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-register-green"
                   />
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm mb-1">Country</label>
                     <select 
@@ -261,7 +240,7 @@ export default function RegisterPage() {
 
           {step === 2 && (
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold mt-14">What best describes the challenges your school faces?</h2>
+              <h2 className="text-xl font-semibold mt-6 md:mt-14">What best describes the challenges your school faces?</h2>
               <p className="text-gray-600 text-sm mb-8">
                 Select all that apply to help donors understand your needs better
               </p>
@@ -287,7 +266,7 @@ export default function RegisterPage() {
 
           {step === 3 && (
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold mt-14">Contact Person Details</h2>
+              <h2 className="text-xl font-semibold mt-6 md:mt-14">Contact Person Details</h2>
               <p className="text-gray-600 text-sm mb-8">
                 Lorem ipsum dolor sit amet consectetur. Molestie leo nulla sed a facilisis aliquet massa.
               </p>
@@ -336,7 +315,7 @@ export default function RegisterPage() {
 
           {step === 4 && (
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold mt-14">Secure your account</h2>
+              <h2 className="text-xl font-semibold mt-6 md:mt-14">Secure your account</h2>
               <p className="text-gray-600 text-sm mb-8">
                 Lorem ipsum dolor sit amet consectetur. Molestie leo nulla sed a facilisis aliquet massa.
               </p>

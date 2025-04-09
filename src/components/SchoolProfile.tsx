@@ -1,5 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
+import ContactSchool from './ContactSchool';
 
 interface SchoolProfileProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ interface SchoolProfileProps {
 }
 
 export default function SchoolProfile({ isOpen, onClose, school }: SchoolProfileProps) {
+  const [isContactOpen, setIsContactOpen] = useState(false);
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -100,7 +102,7 @@ export default function SchoolProfile({ isOpen, onClose, school }: SchoolProfile
                   </div>
 
                   <button
-                    onClick={onClose}
+                    onClick={() => setIsContactOpen(true)}
                     className="mt-6 w-full bg-register-green text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
                   >
                     Contact School
@@ -111,6 +113,15 @@ export default function SchoolProfile({ isOpen, onClose, school }: SchoolProfile
           </div>
         </div>
       </Dialog>
+
+      <ContactSchool
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+        recipient={{
+          name: school.representative.name,
+          role: school.representative.role
+        }}
+      />
     </Transition>
   );
 }
