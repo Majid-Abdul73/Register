@@ -34,6 +34,7 @@ interface Campaign {
 }
 
 export default function DashboardPage() {
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const { data: campaigns, loading: campaignsLoading } = useCampaignData();
   const { data: schools, loading: schoolsLoading } = useSchoolData();
   const [stats, setStats] = useState({
@@ -58,7 +59,7 @@ export default function DashboardPage() {
       totalDonations,
       studentPopulation: Number(userSchool?.studentPopulation || 0)
     });
-  }, [campaigns, schools, campaignsLoading, schoolsLoading]); // Remove userCampaigns and userSchool from dependencies
+  }, [campaigns, schools, campaignsLoading, schoolsLoading]);
 
   // Move these outside useEffect since they're needed for rendering
   const userSchool = schools?.find(school => school.id === auth.currentUser?.uid);
@@ -77,18 +78,48 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div>
+      {/* Add mobile menu button */}
+      <div className="relative z-10">
         <DashboardHeader />
+        <button
+          onClick={() => setSidebarOpen(!isSidebarOpen)}
+          className="md:hidden fixed top-4 left-4 p-2 rounded-lg bg-white shadow-md"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
       </div>
       
-      {/* Make the layout stack on mobile */}
       <div className="flex flex-col md:flex-row pt-16">
-        {/* Sidebar - collapsible on mobile */}
-        <div className="w-full md:w-60 md:min-h-screen">
+        {/* Update sidebar with mobile responsive classes */}
+        <div className={`
+          fixed md:relative inset-0 z-20 bg-white md:bg-transparent
+          transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
+          md:transform-none transition-transform duration-200 ease-in-out
+          md:w-60 md:min-h-screen
+        `}>
+          {/* Add close button for mobile */}
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="md:hidden absolute top-4 right-4 p-2 rounded-lg bg-gray-100"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
           <Sidebar />
         </div>
-        
-        {/* Main content area */}
+
+        {/* Overlay for mobile sidebar */}
+        {isSidebarOpen && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-10 md:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
+        {/* Rest of your content */}
         <div className="flex-1 p-4 md:p-8">
           {/* Main Content - stack on mobile */}
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
@@ -122,7 +153,7 @@ export default function DashboardPage() {
                     </svg>
                   </Link>
                   <Link 
-                    to="campaign/new" 
+                    to="/campaigns/new" 
                     className="px-6 py-2 bg-white rounded-md text-sm hover:bg-gray-50 transition-colors flex items-center gap-2"
                   >
                     Create a New Campaign
@@ -147,10 +178,10 @@ export default function DashboardPage() {
                 <div className="space-y-4">
                   {userCampaigns.slice(0, 2).map(campaign => (
                     <div key={campaign.id} className="bg-white rounded-lg shadow-sm p-4">
-                      <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                      <div className="flex flex-col sm:flex-row gap-4">
                         {/* Campaign Image */}
                         <div className="w-full sm:w-1/2 relative">
-                          <div className="aspect-[16/8] rounded-lg overflow-hidden">
+                          <div className="aspect-[16/9] sm:aspect-[16/8] rounded-lg overflow-hidden">
                             <img 
                               src={campaign.mediaUrl || "/images/campaign-placeholder.jpg"} 
                               alt={campaign.name} 

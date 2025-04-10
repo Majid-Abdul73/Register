@@ -54,7 +54,7 @@ export default function FeaturedCampaigns({ campaigns, loading, error, className
                           {campaign.location?.city}, {campaign.location?.country}
                         </span>
                       </div>
-                      <h3 className="font-medium mb-2">{campaign.name}</h3>
+                      <h3 className="font-bold text-xl mb-2">{campaign.name}</h3>
                       <p className="text-sm text-gray-600 line-clamp-3">
                         {campaign.description}
                       </p>
@@ -70,7 +70,7 @@ export default function FeaturedCampaigns({ campaigns, loading, error, className
                           }}
                         />
                       </div>
-                      <div className="flex justify-between text-sm mb-4">
+                      <div className="flex justify-between text-sm font-semibold mb-4">
                         <span>Raised: ${campaign.amountRaised?.toLocaleString()}</span>
                         <span>Goal: ${campaign.goal?.toLocaleString()}</span>
                       </div>
@@ -80,10 +80,12 @@ export default function FeaturedCampaigns({ campaigns, loading, error, className
                           alt="" 
                           className="w-6 h-6 rounded-full"
                         />
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm font-semibold text-gray-600">
                           {campaign.organizer?.name || 'Anonymous'}
                         </span>
                       </div>
+                      <h1>makes this challenge complaint</h1>
+
                     </div>
                   </div>
                 ) : (
@@ -94,7 +96,7 @@ export default function FeaturedCampaigns({ campaigns, loading, error, className
                         {campaign.location?.city}, {campaign.location?.country}
                       </span>
                     </div>
-                    <h3 className="font-medium mb-2">{campaign.name}</h3>
+                    <h3 className="font-bold text-xl mb-2">{campaign.name}</h3>
                     <p className="text-sm text-gray-600 mb-4 line-clamp-2">
                       {campaign.description}
                     </p>
@@ -106,7 +108,7 @@ export default function FeaturedCampaigns({ campaigns, loading, error, className
                         }}
                       />
                     </div>
-                    <div className="flex justify-between text-sm">
+                    <div className="flex justify-between text-sm font-semibold">
                       <span>Raised: ${campaign.amountRaised?.toLocaleString()}</span>
                       <span>Goal: ${campaign.goal?.toLocaleString()}</span>
                     </div>

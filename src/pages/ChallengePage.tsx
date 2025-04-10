@@ -6,12 +6,14 @@ import { db } from '../config/firebase';
 import { useIndexedDB } from '../hooks/useIndexedDB';
 import { useCampaignData } from '../components/Data';
 import QuickShare from '../components/QuickShare';
+import SchoolProfile from '../components/SchoolProfile';
 
 const Navbar = lazy(() => import('../components/Navbar'));
 
 const ChallengePage = () => {
   const navigate = useNavigate();
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const { id } = useParams();
   const { getFromDB, saveToDB } = useIndexedDB();
   const { data } = useCampaignData();
@@ -94,9 +96,12 @@ const ChallengePage = () => {
             </div>
             
             {/* Image Gallery */}
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-6">
-              {[1, 2, 3].map((_, index) => (
-                <div key={index} className="w-48 md:w-64 h-24 md:h-32 flex-shrink-0 rounded-lg overflow-hidden border-2 border-white">
+            <div className="grid grid-cols-4 gap-2 mb-6">
+              {[1, 2, 3, 4].map((_, index) => (
+                <div 
+                  key={index} 
+                  className="aspect-[4/3] rounded-lg overflow-hidden border-2 border-white hover:opacity-90 transition-opacity cursor-pointer"
+                >
                   <img
                     src={campaign.mediaUrl}
                     alt=""
@@ -104,13 +109,10 @@ const ChallengePage = () => {
                   />
                 </div>
               ))}
-              <div className="w-48 md:w-64 h-24 md:h-32 flex-shrink-0 rounded-lg overflow-hidden border-2 border-white bg-black/50 flex items-center justify-center text-white">
-                +24
-              </div>
             </div>
 
             {/* Campaign Info */}
-            <div className="space-y-4 mb-8">
+            <div className="space-y-4 mb-6 -mt-8 py-12">
               <div className="flex flex-wrap items-center gap-4 text-register-green">
                 <div className="flex items-center gap-2">
                   <img src="/images/location.svg" alt="" className="w-5 h-5" />
@@ -119,11 +121,52 @@ const ChallengePage = () => {
               </div>
               
               <h1 className="text-xl md:text-2xl font-bold">{campaign.name}</h1>
+
+              <span className="absolute bg-green-500 text-white px-2 py-1 rounded-full text-xs py-2">
+                {campaign.category}
+              </span>
+
             </div>
 
             {/* Description and Updates sections */}
             <div className="border-t-2 border-b-2 py-8 md:py-12">
               <p className="text-sm md:text-base text-gray-600">{campaign.description}</p>
+            </div>
+
+            {/* Update section */}
+            <div className="border-t- border-b-2 py-8 md:py-12">
+              <div className="mb-6">
+                <h2 className="text-xl font-bold mb-4">Updates</h2>
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
+                      <span>Yesterday</span>
+                      <span>by {campaign.organizer?.name}</span>
+                    </div>
+                    <p className="text-gray-600 text-sm">
+                      Lorem ipsum dolor sit amet consectetur. Ac lectus urna cras mattis aliquam. Quam tortor facilisi varius molestie ut quam sit euismod maecenas. Sit fringilla porta consequat amet. Vitae elementum pellentesque amet nulla porttitor ut amet diam purus. Cras enim ultricies quis non pulvinar turpis etiam.
+                    </p>
+                  </div>
+                </div>
+                <button className="text-gray-600 text-sm mt-4 hover:text-gray-800">
+                  See older updates
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <button 
+                  onClick={() => navigate(`/donation/${campaign.id}`)}
+                  className="bg-register-green text-white py-3 rounded-lg font-medium"
+                >
+                  Donate
+                </button>
+                <button 
+                  onClick={() => setIsShareOpen(true)}
+                  className="bg-black text-white py-3 rounded-lg font-medium"
+                >
+                  Share
+                </button>
+              </div>
             </div>
 
             {/* Mobile Action Buttons - Show only on mobile */}
@@ -143,25 +186,56 @@ const ChallengePage = () => {
             </div>
 
             {/* Organizer Section */}
-            <div className="mb-6">
-              <h2 className="text-xl md:text-2xl font-semibold mb-6 md:mb-8 pt-8 md:pt-12">Organizer</h2>
-              <div className="flex flex-col md:flex-row md:items-center gap-4">
+            <div className="py-8">
+              <h2 className="text-xl font-bold mb-4">Organizer</h2>
+              <div className="flex items-center gap-4 mb-8">
                 <img 
-                  src={'/avatar.svg'} 
+                  src={campaign.organizer?.profileImage || '/avatar.svg'} 
                   alt="" 
-                  className="w-12 h-12 md:w-16 md:h-16 rounded-full"
+                  className="w-12 h-12 rounded-full bg-gray-100"
                 />
                 <div>
-                  <h3 className="font-medium text-lg">{campaign.organizer?.name}</h3>
-                  <p className="text-sm text-gray-500">makes this challenge campaign</p>
+                  <h3 className="font-medium">{campaign.organizer?.name || 'John Johnson'}</h3>
+                  <p className="text-sm text-gray-500">makes this challenge complaint</p>
                 </div>
               </div>
+
+              <h2 className="text-xl font-semibold mb-4">on Behalf of</h2>
+              <h3 className="text-3xl md:text-3xl font-bold mb-2">{campaign.name}</h3>
+              <div className="flex items-center gap-2 mb-4">
+                <img src="/images/location-b.svg" alt="" className="w-5 h-5" />
+                <span className="text-sm md:text-base">{campaign.location?.city}, {campaign.location?.country}</span>
+              </div>
+              
+              <button
+                onClick={() => setIsProfileOpen(true)}
+                className="inline-flex items-center justify-between text-register-green py-2 px-3 rounded-lg bg-register-green-light text-md w-[200px]"
+              >
+                <span>View School Profile</span>
+                <img src="/images/greater.svg" alt="" className="w-[15px] h-[15px]" />
+              </button>
+
+              <SchoolProfile
+                isOpen={isProfileOpen}
+                onClose={() => setIsProfileOpen(false)}
+                school={{
+                  name: campaign.name,
+                  location: `${campaign.location?.city}, ${campaign.location?.country}`,
+                  address: campaign.location?.address || '',
+                  totalStudents: campaign.totalStudents || 0,
+                  challenges: campaign.challenges || [],
+                  representative: {
+                    name: campaign.organizer?.name || '',
+                    role: 'School Representative'
+                  }
+                }}
+              />
             </div>
           </div>
 
           {/* Part 3 - Donation Info */}
           <div className="col-span-1 lg:col-span-4">
-            <div className="bg-white rounded-xl p-4 md:p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] lg:sticky lg:top-24">
+            <div className="bg-white rounded-xl p-4 md:p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
               {/* Amount Raised */}
               <div className="mb-6">
                 <h2 className="text-2xl font-bold mb-1">
@@ -195,7 +269,7 @@ const ChallengePage = () => {
                     />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center text-sm">
-                    40%
+                    0%
                   </div>
                 </div>
               </div>
@@ -227,16 +301,16 @@ const ChallengePage = () => {
                   <svg className="w-5 h-5 text-register-green" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-register-green">24 people are already donated</span>
+                  <span className="text-register-green">... people are already donated</span>
                 </div>
 
                 <div className="space-y-4">
                   {[
-                    { name: 'Anonymous', amount: 50 },
-                    // { name: 'Erica Johnson', amount: 50 },
-                    // { name: 'Michael Smith', amount: 75 },
-                    // { name: 'Clara Oswald', amount: 60 },
-                    // { name: 'Liam Neeson', amount: 90 }
+                    { name: 'Anonymous', amount: 0 },
+                    { name: 'Anonymous', amount: 0 },
+                    { name: 'Anonymous', amount: 0 },
+                    { name: 'Anonymous', amount: 0 },
+                    { name: 'Anonymous', amount: 0 },
                   ].map((donor, index) => (
                     <div key={index} className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-gray-200 rounded-full" />

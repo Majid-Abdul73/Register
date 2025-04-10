@@ -41,7 +41,7 @@ export default function CampaignsListPage() {
                   Lorem ipsum dolor sit amet consectetur. Semper enim scelerisque in pellentesque amet
                 </p>
                 <Link
-                  to="/new"
+                  to="/campaigns/new"
                   className="inline-flex items-center bg-white text-register-green px-4 py-2 rounded-md hover:bg-gray-50"
                 >
                   Create a New Campaign

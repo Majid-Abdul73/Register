@@ -35,7 +35,7 @@ export default function Navbar({
   };
 
   const defaultLinks = [
-    { to: "/dashboard", text: "Campaigns" },
+    { to: "/donate", text: "Campaigns" },
     { to: "/how-it-works", text: "How it Works" },
     { to: "/features", text: "About Register" }
   ];

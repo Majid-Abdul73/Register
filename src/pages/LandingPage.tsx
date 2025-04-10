@@ -44,7 +44,7 @@ export default function LandingPage() {
         <Navbar 
           variant="transparent" 
           customLinks={[
-            { to: "/campaigns", text: "Campaigns" },
+            { to: "/donate", text: "Campaigns" },
             { to: "/how-it-works", text: "How it Works" },
             { to: "/about-us", text: "About Register" }
           ]}
@@ -83,10 +83,8 @@ export default function LandingPage() {
                     className="w-full px-3 py-2 border-0 bg-transparent text-gray-500 focus:ring-0"
                     defaultValue=""
                   >
-                    <option value="" disabled>Location</option>
                     <option>Central</option>
                     <option>Greater Accra</option>
-                    <option>Kenya</option>
                     <option>Western</option>
                     <option>All Locations</option>
                   </select>
@@ -116,7 +114,7 @@ export default function LandingPage() {
         campaigns={recentCampaigns}
         loading={loading}
         error={error || undefined}
-        className="-mt-16"
+        className="-mt-10"
       />
 
       {/* Campaign Grid Section */}
@@ -141,7 +139,8 @@ export default function LandingPage() {
               <div className="col-span-full text-center text-red-500 py-12">{errorMessage}</div>
             ) : (
               recentCampaigns?.map(campaign => (
-                <div 
+                <Link 
+                  to={`/challenge/${campaign.id}`}
                   key={campaign.id}
                   className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
                 >
@@ -162,7 +161,7 @@ export default function LandingPage() {
                         {campaign.location?.city}, {campaign.location?.country}
                       </span>
                     </div>
-                    <h3 className="font-medium mb-2">{campaign.name}</h3>
+                    <h3 className="font-bold text-xl mb-2">{campaign.name}</h3>
                     <p className="text-sm text-gray-600 mb-4 line-clamp-2">
                       {campaign.description}
                     </p>
@@ -174,12 +173,12 @@ export default function LandingPage() {
                         }}
                       />
                     </div>
-                    <div className="flex justify-between text-sm">
+                    <div className="flex justify-between text-sm font-semibold">
                       <span>Raised: ${campaign.amountRaised?.toLocaleString()}</span>
                       <span>Goal: ${campaign.goal?.toLocaleString()}</span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))
             )}
           </div>
