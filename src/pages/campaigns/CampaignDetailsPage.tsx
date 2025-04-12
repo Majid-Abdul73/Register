@@ -85,7 +85,7 @@ export default function CampaignDetailsPage() {
       {/* Main layout - Sidebar and Content */}
       <div className="flex pt-16">
         {/* Sidebar */}
-        <div className="w-64 fixed left-0 top-16 bottom-0 bg-white border-r">
+        <div className="fixed left-0 top-16 bottom-0 bg-white">
           <Sidebar />
         </div>
         
@@ -94,14 +94,14 @@ export default function CampaignDetailsPage() {
           <div className="grid grid-cols-3 gap-8">
             {/* Left Column - Main Content */}
             <div className="col-span-2">
-              <Link to="/campaigns" className="flex items-center text-gray-600 mb-4">
+              <Link to="/campaigns" className="flex items-center font-semibold text-lg mb-8">
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
                 All Campaigns
               </Link>
 
-              <div className="bg-white rounded-lg overflow-hidden shadow-sm">
+              <div className="rounded-lg overflow-hidden">
                 {/* Main Image */}
                 <img 
                   src={campaign.mediaUrl} 
@@ -109,19 +109,26 @@ export default function CampaignDetailsPage() {
                   className="w-full h-96 object-cover"
                 />
                 {/* Thumbnail Images */}
-                <div className="flex gap-2 p-4 border-b relative">
-                  {[1, 2, 3, 4].map((_, index) => (
-                    <div key={index} className="w-24 h-24 rounded-lg overflow-hidden">
-                      <img 
-                        src={campaign.mediaUrl} 
-                        alt={`Thumbnail ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
+                <div className="flex gap-2 relative mt-2">
+                {[1, 2, 3 ].map((_, index) => (
+                <div 
+                  key={index} 
+                  className="aspect-[4/3] rounded-lg overflow-hidden border-2 border-white hover:opacity-90 transition-opacity cursor-pointer"
+                >
+                  <img
+                    src={campaign.mediaUrl}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
                 </div>
+              ))}
+              <button className="aspect-[4/3] w-full h-full object-cover rounded-lg border-2 border-gray-300 flex flex-col items-center justify-center gap-2">
+                <span className="text-2xl text-gray-400"></span>
+                <span className="text-sm text-gray-500">Add more images</span>
+              </button>
+            </div>
 
-                <div className="p-6">
+                <div className="py-4">
                   {/* Location & School */}
                   <div className="flex items-center gap-4 mb-4">
                     <div className="flex items-center gap-2">
@@ -134,43 +141,76 @@ export default function CampaignDetailsPage() {
                       </span>
                     </div>
                   </div>
-                  <h1 className="text-2xl font-semibold mb-4">{campaign.name}</h1>
+                 
+                 
+                  <div className='flex justify-between items-center w-full'>
+                <h1 className="text-xl md:text-2xl font-bold">{campaign.name}</h1>
+                <button className="text-gray-600 text-sm font-medium bg-register-gray/10 rounded py-2 w-[160px]">
+                  Edit Campaign Title
+                </button>
+              </div>
 
                   {/* category */}
-                 <div className="border-b pb-6 flex items-center gap-2 mb-4">
-                    <span className="bg-register-green text-white px-3 py-1 rounded-full text-sm">
-                      {campaign.category}
-                    </span>
-                  </div>
-                  <p className="text-gray-600 mb-6">{campaign.description}</p>
-                  
-                  <div className="border-t pt-6">
-                    <h2 className="text-2xl font-medium mb-4">Updates</h2>
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <p className="text-sm text-gray-600">
-                        September 21, John Johnson
-                      </p>
-                      <p className="text-sm mt-2">
-                        Lorem ipsum dolor sit amet consectetur. Ut tellus ut in cursus sed sit aliquet. Turpis habitant
-                        tellus in sagittis ut suspendisse nec.
-                      </p>
-                    </div>
-                  </div>
-
+                <div className="flex justify-between items-center w-full mt-4 mb-8">
+                  <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs">
+                    {campaign.category}
+                  </span>
+                  <button className="text-gray-600 text-sm font-medium bg-register-gray/10 rounded py-2 w-[130px]">
+                    Edit Category
+                  </button>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-4">
-                <div className="flex gap-4">
-                  <button className="w-full py-2 rounded-md bg-register-green border text-white" >
-                    Donate
+
+
+                <div className="border-t-2 border-b-2 py-8 md:py-12">
+              <div className="flex justify-between items-center w-full">
+                <p className="text-sm md:text-base text-gray-600 flex-1 mr-4">{campaign.description}</p>
+                <button className="text-gray-600 text-sm font-medium bg-register-gray/10 rounded py-2 w-[130px]">
+                  Edit Description
+                </button>
+              </div>
+            </div>
+
+            
+            <div className="mb-6">
+                <div className="flex justify-between items-center w-full mt-8 mb-4">
+                  <h2 className="text-xl font-bold">Updates</h2>
+                  <button className="text-gray-600 text-sm font-medium bg-register-gray/10 rounded py-2 w-[130px]">
+                    Add an Update
                   </button>
-                  <button className="w-full py-2 rounded-md bg-register-black border text-white" >
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between items-center w-full mb-2">
+                      <div className="flex items-center gap-2 text-gray-600 text-sm">
+                        <span>Yesterday</span>
+                        <span>by {campaign.organizer?.name}</span>
+                      </div>
+                      <button className="text-gray-600 text-sm font-medium bg-register-gray/10 rounded py-2 w-[130px]">
+                        Edit Update
+                      </button>
+                    </div>
+                    <p className="text-gray-600 text-sm flex-1 mr-4">
+                      Lorem ipsum dolor sit amet consectetur. Ac lectus urna cras mattis aliquam. Quam tortor facilisi varius molestie ut quam sit euismod maecenas. Sit fringilla porta consequat amet. Vitae elementum pellentesque amet nulla porttitor ut amet diam purus. Cras enim ultricies quis non pulvinar turpis etiam.
+                    </p>
+                  </div>
+                </div>
+                <h1 className='underline font-bold mt-4'>See older updates</h1>
+              </div>
+                </div>
+
+                <div className="rounded-lg shadow-sm p-4">
+                <div className="flex gap-4">
+                <button className="w-full py-2 rounded-md bg-register-black border text-white" >
                     Share
+                  </button>
+                  <button className="w-full py-2 rounded-md bg-register-red border text-white" >
+                    Delete Campaign
                   </button>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="rounded-lg shadow-sm p-6">
                 <h2 className="font-medium mb-4">Organizer</h2>
                 <div className="flex items-center">
                   <img 
@@ -191,8 +231,9 @@ export default function CampaignDetailsPage() {
             {/* Right Column - Donation Info */}
             <div className="space-y-6">
               {/* Goals & Donation Card */}
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h2 className="text-lg font-medium mb-4">Goals & Donation</h2>
+              <h2 className="text-lg font-semibold mb-4">Goals & Donation</h2>
+
+              <div className="bg-white rounded-lg shadow-sm p-4">
                 
                 {/* Circular Progress */}
                 <div className="relative w-32 h-32 mx-auto mb-4">
@@ -237,56 +278,57 @@ export default function CampaignDetailsPage() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                  <button className="px-6 py-2 bg-black text-white rounded-md">
-                    Share
-                  </button>
-                  <button className="px-6 py-2 bg-black text-white rounded-md">
-                    Edit
-                  </button>
-                </div>
-                <button className="w-full py-2 bg-register-green text-white rounded-md mb-6">
-                  Mark as Completed
+               
+               <div>
+               <button className="w-full py-2 bg-register-red text-white rounded-md mb-6">
+                  Delete Campaign
                 </button>
 
-                {/* Donors List */}
-                <div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <svg className="w-5 h-5 text-register-green" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+               <button className="w-full py-2 bg-register-green text-white rounded-md mb-6">
+                  Mark as Completed
+                </button>
+               </div>
+                
+<div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-register-green" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <p className="text-sm text-gray-600">... people are already donated</p>
-                  </div>
-                <div className='flex'>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
-                        <span>Anonymous</span>
-                      </div>
-                      <span className="text-gray-600">$0</span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
-                        <span>Anonymous</span>
-                      </div>
-                      <span className="text-gray-600">$0</span>
-                    </div>
-                    
+                    <span className="text-register-green">24 people are already donated</span>
                   </div>
                 </div>
 
-                <button className="w-full py- bg-white text-white rounded-md text-register-green text-sm mt-4">
-                    View all Donors
-                  </button>
+                <div className="space-y-4">
+                  {[
+                    { name: 'Anonymous', amount: 0 },
+                    { name: 'Anonymous', amount: 0 },
+                    { name: 'Anonymous', amount: 0 },
+                   
+                  ].map((donor, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-gray-200 rounded-full" />
+                      <div>
+                        <div className="font-medium">{donor.name}</div>
+                        <div className="text-sm text-gray-600">${donor.amount}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <button className="text-register-green text-sm hover:text-green-700 border-register-green border font-semibold py-2 px-12 rounded">
+                  View all Donors
+                </button>
+
+              </div>
+
+                
               </div>
             </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      // </div>
   );
 }

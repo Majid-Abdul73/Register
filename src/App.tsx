@@ -63,8 +63,7 @@ export default function App() {
               {/* Public Routes */}
               <Route path="/" element={<pages.Landing />} />
               <Route path="/donation/:id" element={<pages.Donation />} />
-              <Route path="/campaigns" element={<pages.CampaignsList />} />
-              <Route path="/campaigns/:id" element={<pages.CampaignDetails />} />
+              
               <Route path="/challenge/:id" element={<pages.Challenge />} />
               <Route path="/donate" element={<pages.Donate />} />
 
@@ -78,6 +77,9 @@ export default function App() {
               <Route element={<AuthWrapper user={user} type="protected" />}>
                 <Route path="/dashboard" element={<pages.Dashboard />} />
                 <Route path="/campaigns/new" element={<pages.CreateCampaign />} />
+
+                <Route path="/campaigns" element={<pages.CampaignsList />} />
+              <Route path="/campaigns/:id" element={<pages.CampaignDetails />} />
               </Route>
 
               <Route path="*" element={<Navigate to="/" replace />} />

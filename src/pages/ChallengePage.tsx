@@ -275,18 +275,19 @@ const ChallengePage = () => {
               </div>
 
               {/* Action Buttons */}
-              <button className="w-full bg-register-green text-white py-3 rounded-lg font-medium mb-3">
+              <button 
+                onClick={() => navigate(`/donation/${campaign.id}`)}
+                className="w-full bg-register-green text-white py-3 rounded-lg font-medium mb-3" >
                 Donate
               </button>
-              {/* // Update the Share button: */}
+
               <button 
                 onClick={() => setIsShareOpen(true)} 
-                className="w-full bg-black text-white py-3 rounded-lg font-medium mb-6"
-              >
+                className="w-full bg-black text-white py-3 rounded-lg font-medium mb-6" >
                 Share
               </button>
               
-              {/* // Add the QuickShare component: */}
+              {/* QuickShare component: */}
               <QuickShare
                 isOpen={isShareOpen}
                 onClose={() => setIsShareOpen(false)}

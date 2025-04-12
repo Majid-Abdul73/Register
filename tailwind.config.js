@@ -11,6 +11,9 @@ export default {
         'register-green-light': '#F0FDF4',
         'register-black': '#111827',
         'register-gray': '#6B7280',
+        
+        'register-red': '#FF4D32',
+       'register-red-light': '#FEE2E2',
       },
       container: {
         center: true,

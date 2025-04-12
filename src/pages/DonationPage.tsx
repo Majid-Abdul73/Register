@@ -176,7 +176,7 @@ export default function DonationPage() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
+                    placeholder="email@gmail.com"
                     className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-register-green/20 focus:border-register-green"
                   />
                 </div>
@@ -190,10 +190,39 @@ export default function DonationPage() {
                     className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-register-green/20 focus:border-register-green"
                   />
                 </div>
-                {/* Stripe Card Element will be inserted here */}
-                <div className="border border-gray-200 rounded-lg p-4">
-                  {/* Stripe Card Element Placeholder */}
-                  <div className="h-8 bg-gray-50 rounded"></div>
+                <div>
+                  <label className="block text-sm mb-1">Card Number</label>
+                  <input
+                    type="text"
+                    placeholder="9304 XXXX XXXX"
+                    className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-register-green/20 focus:border-register-green"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm mb-1">MM/YY</label>
+                    <input
+                      type="text"
+                      placeholder="06/2025"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-register-green/20 focus:border-register-green"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm mb-1">CVV</label>
+                    <input
+                      type="text"
+                      placeholder="XXX"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-register-green/20 focus:border-register-green"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm mb-1">Name on Card</label>
+                  <input
+                    type="text"
+                    placeholder="9304 XXXX XXXX"
+                    className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-register-green/20 focus:border-register-green"
+                  />
                 </div>
               </div>
             )}

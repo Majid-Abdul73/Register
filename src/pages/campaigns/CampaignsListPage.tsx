@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { auth } from '../../config/firebase';  // Add this import
 import Sidebar from '../../components/Sidebar';
 import DashboardHeader from '../../components/DashboardHeader';
 import { useCampaignData } from '../../components/Data';
 
 export default function CampaignsListPage() {
-  const { data: campaigns, loading, error } = useCampaignData();
+  const { data: allCampaigns, loading, error } = useCampaignData();
   const [sortOrder, setSortOrder] = useState<'Recent' | 'Oldest'>('Recent');
+
+  // Filter campaigns for current user
+  const campaigns = allCampaigns.filter(campaign => campaign.schoolId === auth.currentUser?.uid);
 
   // Handle sort change
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
