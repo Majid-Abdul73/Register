@@ -110,33 +110,19 @@ export default function CampaignDetailsPage() {
                 />
                 {/* Thumbnail Images */}
                 <div className="flex gap-2 relative mt-2">
-                {[1, 2, 3 ].map((_, index) => (
-                <div 
-                  key={index} 
-                  className="aspect-[4/3] rounded-lg overflow-hidden border-2 border-white hover:opacity-90 transition-opacity cursor-pointer"
-                >
-                  <img
-                    src={campaign.mediaUrl}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-              <button className="aspect-[4/3] w-full h-full object-cover rounded-lg border-2 border-gray-300 flex flex-col items-center justify-center gap-2">
-                <span className="text-2xl text-gray-400"></span>
-                <span className="text-sm text-gray-500">Add more images</span>
-              </button>
-            </div>
+                    <button className="aspect-[4/3] w-[150px] h-full object-cover rounded-lg border-2 border-gray-300 flex flex-col items-center justify-center gap-2">
+                        <span className="text-2xl text-gray-400"></span>
+                        <span className="text-sm text-gray-500">Add more images</span>
+                    </button>
+                </div>  
 
                 <div className="py-4">
                   {/* Location & School */}
                   <div className="flex items-center gap-4 mb-4">
                     <div className="flex items-center gap-2">
-                      <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <span className="text-gray-600">
+                      <img src="/images/location.svg" alt="" 
+                      className='w-5'/>
+                      <span className="text-register-green">
                         {campaign.location ? `${campaign.location.city}, ${campaign.location.country}` : 'Location not specified'}
                       </span>
                     </div>
