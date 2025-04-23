@@ -49,15 +49,6 @@ export default function HowItWorks() {
           
         </div>
 
-        {/* <div className="relative py-10 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <h2 className="text-[120px] font-bold text-gray-400 gap-30"> Register </h2>
-            <span className=" text-[100px] bg-gray-300 text-white font-bold px-6 rounded-lg">FUNDS</span>
-          </div>
-        </div>
-      </div> */}
-
       <img src="/images/footer.svg" alt="footer image"
       className='mt-40' />
 

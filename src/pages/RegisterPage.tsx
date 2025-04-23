@@ -124,7 +124,44 @@ export default function RegisterPage() {
             </>
           )}
           
-          {/* Similar updates for other steps... */}
+          {step === 2 && (
+            <>
+              <h1 className="text-2xl md:text-3xl font-bold mb-4">Broadcast your challenges <br className="hidden md:block" /> to donors who care</h1>
+              <div className="mb-4 hidden md:block">
+                <img 
+                  src="/images/teacher-student.jpg" 
+                  alt="School Challenges"
+                  className="rounded-lg w-full h-[240px] object-cover"
+                />
+              </div>
+            </>
+          )}
+          
+          {step === 3 && (
+            <>
+              <h1 className="text-2xl md:text-3xl font-bold mb-4">Verified schools <br className="hidden md:block" /> receive 2x more funding</h1>
+              <div className="mb-4 hidden md:block">
+                <img 
+                  src="/images/steam-class.jpg" 
+                  alt="steam-class"
+                  className="rounded-lg w-full h-[240px] object-cover"
+                />
+              </div>
+            </>
+          )}
+          
+          {step === 4 && (
+            <>
+              <h1 className="text-2xl md:text-3xl font-bold mb-4">Your final step to start to <br className="hidden md:block" /> receive funding</h1>
+              <div className="mb-4 hidden md:block">
+                <img 
+                  src="/images/students-happy.jpg" 
+                  alt="Account Security"
+                  className="rounded-lg w-full h-[240px] object-cover"
+                />
+              </div>
+            </>
+          )}
           
           <p className="text-gray-600 text-sm hidden md:block">
             Lorem ipsum dolor sit amet consectetur. Semper enim scelerisque in pellentesque amet

@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        // sans: ['Inter', 'sans-serif'], 
+        sans: ['"Inter Tight"', 'sans-serif'], // override default
+
+      },
       colors: {
         'register-green': '#16A34A',
         'register-green-light': '#F0FDF4',
@@ -23,6 +28,7 @@ export default {
           md: '768px',
           lg: '1024px',
           xl: '1280px',
+          '2xl': '1536px',
         },
       },
     },

@@ -1,10 +1,21 @@
 import { useState } from 'react';
 import DashboardHeader from '../../components/DashboardHeader';
-import CampaignForm from '../../components/CampaignForm';
 import Sidebar from '../../components/Sidebar';
+import SchoolProfile from '../../components/settings/SchoolProfile';
+import Security from '../../components/settings/Security';
+import Population from '../../components/settings/Population';
+import Notifications from '../../components/settings/Notifications';
 
-export default function CreateCampaignPage() {
+export default function Settings() {
+  const [activeTab, setActiveTab] = useState('profile');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const tabs = [
+    { id: 'profile', label: 'School Profile' },
+    { id: 'security', label: 'Security' },
+    { id: 'population', label: 'Population' },
+    { id: 'notifications', label: 'Notifications' }
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -30,6 +41,7 @@ export default function CreateCampaignPage() {
         </button>
       </div>
       
+      {/* Main layout - Sidebar and Content */}
       <div className="flex pt-16">
         {/* Sidebar - Hidden on mobile, shown with overlay when menu button is clicked */}
         <div className={`fixed left-0 top-16 bottom-0 bg-white z-40 w-64 transition-transform duration-300 ease-in-out ${
@@ -48,11 +60,35 @@ export default function CreateCampaignPage() {
         
         {/* Main content - Full width on mobile, with margin on larger screens */}
         <div className="flex-1 p-4 md:p-6 lg:p-8 w-full lg:ml-64 transition-all duration-300">
-          <div className="max-w-2xl mx-auto">
-            <h1 className="text-xl text-white font-medium bg-register-green px-4 py-3 md:px-6 md:py-4 rounded-lg mb-4 md:mb-6">
-              Create a New Campaign
-            </h1>
-            <CampaignForm />
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-lg shadow-sm">
+              <div className="border-b border-gray-200">
+                <h1 className="text-2xl font-semibold p-6">Settings</h1>
+                <nav className="-mb-px flex overflow-x-auto pb-1 px-6 space-x-4 sm:space-x-8">
+                  {tabs.map(tab => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`
+                        py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap
+                        ${activeTab === tab.id 
+                          ? 'border-register-green text-register-green' 
+                          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
+                      `}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+
+              <div className="p-4 sm:p-6">
+                {activeTab === 'profile' && <SchoolProfile />}
+                {activeTab === 'security' && <Security />}
+                {activeTab === 'population' && <Population />}
+                {activeTab === 'notifications' && <Notifications />}
+              </div>
+            </div>
           </div>
         </div>
       </div>

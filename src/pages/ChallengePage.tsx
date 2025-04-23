@@ -122,7 +122,7 @@ const ChallengePage = () => {
               
               <h1 className="text-xl md:text-2xl font-bold">{campaign.name}</h1>
 
-              <span className="absolute bg-green-500 text-white px-2 py-1 rounded-full text-xs py-2">
+              <span className="absolute bg-green-500 text-white px-2 rounded-full text-xs py-2">
                 {campaign.category}
               </span>
 
@@ -308,10 +308,7 @@ const ChallengePage = () => {
                 <div className="space-y-4">
                   {[
                     { name: 'Anonymous', amount: 0 },
-                    { name: 'Anonymous', amount: 0 },
-                    { name: 'Anonymous', amount: 0 },
-                    { name: 'Anonymous', amount: 0 },
-                    { name: 'Anonymous', amount: 0 },
+                 
                   ].map((donor, index) => (
                     <div key={index} className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-gray-200 rounded-full" />

@@ -4,6 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './config/firebase'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { LazyMotion, domAnimation } from 'framer-motion'
+import Settings from './pages/campaigns/Settings';
 
 // Lazy load components
 const pages = {
@@ -80,6 +81,7 @@ export default function App() {
 
                 <Route path="/campaigns" element={<pages.CampaignsList />} />
               <Route path="/campaigns/:id" element={<pages.CampaignDetails />} />
+              <Route path="/settings" element={<Settings />} />
               </Route>
 
               <Route path="*" element={<Navigate to="/" replace />} />
