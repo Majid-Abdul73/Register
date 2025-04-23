@@ -16,17 +16,17 @@ export default function VerificationCard({
   const isVerificationComplete = completedSteps === 3;
 
   const getNextVerificationStep = () => {
-    if (!hasContactInfo) return '/verification/contact';
-    if (!hasAddress) return '/verification/address';
-    if (!hasPopulation) return '/verification/population';
-    return '/verification';
+    if (!hasContactInfo) return '/settings?tab=security'; // Contact info is in Security tab
+    if (!hasAddress) return '/settings?tab=profile'; // Address is in School Profile tab
+    if (!hasPopulation) return '/settings?tab=population'; // Population is in Population tab
+    return '/settings';
   };
 
   const getNextStepText = () => {
-    if (!hasContactInfo) return 'Add Contact Information';
-    if (!hasAddress) return 'Add School Address';
+    if (!hasContactInfo) return 'Update Contact Information';
+    if (!hasAddress) return 'Update School Address';
     if (!hasPopulation) return 'Update Student Population';
-    return 'Complete Verification';
+    return 'View Settings';
   };
 
   return (
@@ -54,6 +54,14 @@ export default function VerificationCard({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
           <span>Contact Information</span>
+          {!hasContactInfo && (
+            <Link 
+              to="/settings?tab=security" 
+              className="ml-auto text-xs bg-white/20 px-2 py-1 rounded hover:bg-white/30 transition-colors"
+            >
+              Update
+            </Link>
+          )}
         </div>
 
         <div className={`flex items-center gap-2 ${hasAddress ? '' : 'opacity-60'}`}>
@@ -61,6 +69,14 @@ export default function VerificationCard({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
           <span>School Address</span>
+          {!hasAddress && (
+            <Link 
+              to="/settings?tab=profile" 
+              className="ml-auto text-xs bg-white/20 px-2 py-1 rounded hover:bg-white/30 transition-colors"
+            >
+              Update
+            </Link>
+          )}
         </div>
 
         <div className={`flex items-center gap-2 ${hasPopulation ? '' : 'opacity-60'}`}>
@@ -68,6 +84,14 @@ export default function VerificationCard({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
           <span>Update school population data</span>
+          {!hasPopulation && (
+            <Link 
+              to="/settings?tab=population" 
+              className="ml-auto text-xs bg-white/20 px-2 py-1 rounded hover:bg-white/30 transition-colors"
+            >
+              Update
+            </Link>
+          )}
         </div>
 
         {!isVerificationComplete && (

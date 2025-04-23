@@ -103,9 +103,9 @@ export default function DashboardPage() {
       {/* Main layout - Sidebar and Content */}
       <div className="flex pt-16">
         {/* Sidebar - Hidden on mobile, shown with overlay when menu button is clicked */}
-        <div className={`fixed left-0 top-16 bottom-0 bg-white z-40 w-64 transition-transform duration-300 ease-in-out ${
+        <div className={`fixed lg:sticky left-0 top-16 bottom-0 bg-white z-40 w-64 transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        } lg:static lg:block shadow-md`}>
+        } lg:static lg:block shadow-md h-[calc(100vh-4rem)]`}>
           <Sidebar />
         </div>
         
@@ -118,7 +118,7 @@ export default function DashboardPage() {
         )}
         
         {/* Main content - Full width on mobile, with margin on larger screens */}
-        <div className="flex-1 p-4 md:p-6 lg:p-8 w-full lg:ml-64 transition-all duration-300">
+        <div className="flex-1 p-4 md:p-6 lg:p-8 w-full transition-all duration-300">
           {/* Main Content - stack on mobile */}
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
             {/* Left Section */}
