@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
@@ -9,20 +9,10 @@ import FeaturedCampaigns from '../components/FeaturedCampaigns';
 const Navbar = lazy(() => import('../components/Navbar'));
 const HowItWorks = lazy(() => import('../components/HowItWorks'));
 
-
 export default function LandingPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const { data: campaigns, loading, error, handleSearch } = useCampaignData();
-
+  const { data: campaigns, loading, error } = useCampaignData();
 
   // Featured Campaigns
-  
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-    handleSearch(value);
-  };
-
   const recentCampaigns = useMemo(() =>
     campaigns?.sort((a, b) => 
       new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
