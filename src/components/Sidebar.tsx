@@ -73,13 +73,15 @@ export default function Sidebar() {
 
           <Link
             to="/help"
-            className={`flex items-center px-2 py-2 rounded-lg ${
-              isActiveRoute('/help') ? 'text-register-green' : 'text-gray-600'
+            className={`flex items-center px-4 py-2 rounded-lg ${
+              isActiveRoute('/settings') ? 'text-register-green' : 'text-gray-600'
             } hover:bg-gray-50`}
           >
-            <img src="/images/help.svg" alt="" />
+           <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> 
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M21 6L20.25 5.25H3.75L3 6V20.5607L6.31066 17.25H20.25L21 16.5V6ZM19.5 6.75V15.75H5.68934L4.5 16.9393V6.75H19.5Z" fill="#02010e"></path> </g></svg>
             <span>Help & Support</span>
           </Link>
+
         </nav>
       </div>
       

@@ -47,7 +47,7 @@ export default function CreateCampaignPage() {
         )}
         
         {/* Main content - Full width on mobile, with margin on larger screens */}
-        <div className="flex-1 p-4 md:p-6 lg:p-8 w-full lg:ml-64 transition-all duration-300">
+        <div className="flex-1 p-4 md:p-6 lg:p-8 w-full transition-all duration-300">
           <div className="max-w-2xl mx-auto">
             <h1 className="text-xl text-white font-medium bg-register-green px-4 py-3 md:px-6 md:py-4 rounded-lg mb-4 md:mb-6">
               Create a New Campaign

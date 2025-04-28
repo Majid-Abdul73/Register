@@ -76,7 +76,7 @@ export default function LandingPage() {
             </Link>
 
             {/* Search Section */}
-            <div className="max-w-2xl mx-auto">
+            {/* <div className="max-w-2xl mx-auto">
               <div className="flex gap-2 p-2 bg-white rounded-lg shadow-sm border border-gray-200">
                 <div className="flex-1">
                   <select 
@@ -105,7 +105,7 @@ export default function LandingPage() {
                   </svg>
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </motion.div>
