@@ -113,7 +113,7 @@ export default function LandingPage() {
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold">Recent</h2>
             <Link 
-              to="/campaigns" 
+              to="/donate" 
               className="text-register-green hover:text-green-600 transition-colors flex items-center gap-2"
             >
               View all Campaigns
