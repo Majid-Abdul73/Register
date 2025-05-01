@@ -134,7 +134,7 @@ export default function CampaignDetailsPage() {
         )}
         
         {/* Main content - Full width on mobile, with margin on larger screens */}
-        <div className="flex-1 p-4 md:p-6 lg:p-8 w-full lg:ml-64 transition-all duration-300">
+        <div className="flex-1 p-4 md:p-6 lg:p-8 w-full transition-all duration-300">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Left Column - Main Content - Full width on mobile, 2/3 on larger screens */}
             <div className="lg:col-span-2">

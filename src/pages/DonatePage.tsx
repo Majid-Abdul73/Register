@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { lazy, Suspense, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useCampaignData } from '../components/Data';
 import FeaturedCampaigns from '../components/FeaturedCampaigns';
 
@@ -67,7 +68,7 @@ export default function DonatePage() {
         className='mt-24'
       />
 
-          {/* Campaign Grid Section */}
+      {/* Campaign Grid Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-12">
         {categories.map(category => (
@@ -89,45 +90,50 @@ export default function DonatePage() {
               <div className="col-span-full text-center text-red-500 py-12">{errorMessage}</div>
             ) : (
               filteredCampaigns?.map(campaign => (
-                <div 
+                <Link 
+                  to={`/challenge/${campaign.id}`} 
                   key={campaign.id}
-                  className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
+                  className="block"
                 >
-                  <div className="relative h-48">
-                    <span className="absolute bottom-4 left-4 bg-green-500 text-white px-2 py-1 rounded-full text-xs">
-                      {campaign.category}
-                    </span>
-                    <img 
-                      src={campaign.mediaUrl || '/assets/images/campaign-placeholder.jpg'}
-                      alt={campaign.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <div className="flex items-center gap-2 mb-2 text-register-green">
-                      <img src="/images/location.svg" alt="" className="w-4 h-4" />
-                      <span className="text-sm">
-                        {campaign.location?.city}, {campaign.location?.country}
+                  <div 
+                    className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
+                  >
+                    <div className="relative h-48">
+                      <span className="absolute bottom-4 left-4 bg-green-500 text-white px-2 py-1 rounded-full text-xs">
+                        {campaign.category}
                       </span>
-                    </div>
-                    <h3 className="font-medium mb-2">{campaign.name}</h3>
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                      {campaign.description}
-                    </p>
-                    <div className="w-full h-2 bg-gray-100 rounded-full mb-2">
-                      <div 
-                        className="h-2 bg-register-green rounded-full"
-                        style={{ 
-                          width: `${Math.min((campaign.amountRaised / campaign.goal) * 100, 100)}%` 
-                        }}
+                      <img 
+                        src={campaign.mediaUrl || '/assets/images/campaign-placeholder.jpg'}
+                        alt={campaign.name}
+                        className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="flex justify-between text-sm">
-                      <span>Raised: ${campaign.amountRaised?.toLocaleString()}</span>
-                      <span>Goal: ${campaign.goal?.toLocaleString()}</span>
+                    <div className="p-4">
+                      <div className="flex items-center gap-2 mb-2 text-register-green">
+                        <img src="/images/location.svg" alt="" className="w-4 h-4" />
+                        <span className="text-sm">
+                          {campaign.location?.city}, {campaign.location?.country}
+                        </span>
+                      </div>
+                      <h3 className="font-medium mb-2">{campaign.name}</h3>
+                      <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                        {campaign.description}
+                      </p>
+                      <div className="w-full h-2 bg-gray-100 rounded-full mb-2">
+                        <div 
+                          className="h-2 bg-register-green rounded-full"
+                          style={{ 
+                            width: `${Math.min((campaign.amountRaised / campaign.goal) * 100, 100)}%` 
+                          }}
+                        />
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span>Raised: ${campaign.amountRaised?.toLocaleString()}</span>
+                        <span>Goal: ${campaign.goal?.toLocaleString()}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))
             )}
           </div>

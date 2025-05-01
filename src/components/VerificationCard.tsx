@@ -30,7 +30,7 @@ export default function VerificationCard({
   };
 
   return (
-    <div className="bg-register-green rounded-lg p-2 text-white">
+    <div className="bg-register-green rounded-lg p-6 text-white">
       <h2 className="text-xl font-semibold mb-4">
         {isVerificationComplete ? 'Verification Complete' : 'Complete your verification'}
       </h2>

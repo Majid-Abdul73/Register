@@ -31,7 +31,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="w-60 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-16 bottom-0">
+    <div className="w-60 bg-white flex flex-col fixed left-0 top-1 bottom-0">
       <div className={`flex-1 p-4 ${isNavigating ? 'opacity-50 pointer-events-none' : ''}`}>
         <nav className="space-y-2">
           <Link
@@ -85,7 +85,7 @@ export default function Sidebar() {
         </nav>
       </div>
       
-      <div className="p-4 border-t border-gray-200 bg-white">
+      <div className="p-4 -mt-8 border-t border-gray-200 bg-white">
         <button
           className="flex items-center px-4 py-2 w-full text-gray-600 hover:bg-gray-50 rounded-lg"
           onClick={handleLogout}

@@ -124,7 +124,7 @@ export default function DashboardPage() {
             {/* Left Section */}
             <div className="w-full lg:flex-[3] space-y-6">
               {/* Header Card */}
-              <div className="bg-register-green/10 rounded-lg p-6 md:p-16">
+              <div className="bg-register-green/10 rounded-lg p-6 md:p-14 -mt-6">
                 <div className="flex items-center gap-2 text-gray-600 mb-2">
                   <img src="/images/location.svg" alt="" className="w-4 h-4" />
                   <span className="text-sm">
@@ -134,7 +134,7 @@ export default function DashboardPage() {
                     }
                   </span>
                 </div>
-                <h1 className="text-2xl md:text-3xl font-bold text-register-green mb-4">
+                <h1 className="text-2xl md:text-3xl font-bold text-register-green mb-12">
                   {userCampaigns.length > 0 
                     ? userCampaigns[userCampaigns.length - 1].name
                     : `Support ${userSchool?.schoolName || 'Your School'}`
@@ -167,7 +167,7 @@ export default function DashboardPage() {
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-medium">Ongoing Campaign</h2>
                   {userCampaigns.length > 0 && (
-                    <Link to="/list" className="text-register-green flex items-center text-sm">
+                    <Link to="/list" className="text flex items-center text-sm">
                       View all
                       <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -246,7 +246,7 @@ export default function DashboardPage() {
             {/* Right Section */}
             <div className="w-full lg:flex-1 space-y-6">
               {/* Stats Card */}
-              <div className="bg-white rounded-lg p-6">
+              <div className="bg-[#FFFFFF] rounded-lg p-6 -mt-6 mb-16">
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4">
                   <div>
                     <h3 className="text-3xl md:text-4xl font-bold text-register-green">
