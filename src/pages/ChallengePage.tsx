@@ -271,7 +271,7 @@ const ChallengePage = () => {
                     />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center text-sm">
-                    0%
+                    {Math.round((campaign.amountRaised / campaign.goal) * 100)}%
                   </div>
                 </div>
               </div>

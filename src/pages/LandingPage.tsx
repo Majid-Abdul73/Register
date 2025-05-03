@@ -65,37 +65,6 @@ export default function LandingPage() {
               Donate to a Cause
             </Link>
 
-            {/* Search Section */}
-            {/* <div className="max-w-2xl mx-auto">
-              <div className="flex gap-2 p-2 bg-white rounded-lg shadow-sm border border-gray-200">
-                <div className="flex-1">
-                  <select 
-                    className="w-full px-3 py-2 border-0 bg-transparent text-gray-500 focus:ring-0"
-                    defaultValue=""
-                  >
-                    <option>Central</option>
-                    <option>Greater Accra</option>
-                    <option>Western</option>
-                    <option>All Locations</option>
-                  </select>
-                </div>
-                <div className="w-px bg-gray-200" />
-                <div className="flex-1">
-                  <input
-                    type="text"
-                    placeholder="Basic Contributors"
-                    className="w-full px-3 py-2 border-0 bg-transparent focus:ring-0"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                  />
-                </div>
-                <button className="p-2">
-                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-              </div>
-            </div> */}
           </div>
         </div>
       </motion.div>
@@ -114,7 +83,7 @@ export default function LandingPage() {
             <h2 className="text-2xl font-bold">Recent</h2>
             <Link 
               to="/donate" 
-              className="text-register-green hover:text-green-600 transition-colors flex items-center gap-2"
+              className="text-register-green bg-[#FFFFFF] shadow p-2 justify-between rounded-xl px-6 flex items-center gap-2"
             >
               View all Campaigns
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

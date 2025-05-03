@@ -54,7 +54,7 @@ export default function FeaturedCampaigns({ campaigns, loading, error, className
                           {campaign.location?.city}, {campaign.location?.country}
                         </span>
                       </div>
-                      <h3 className="font-bold text-xl mb-2">{campaign.name}</h3>
+                      <h3 className="font-semibold text-xl mb-2">{campaign.name}</h3>
                       <p className="text-sm text-gray-600 line-clamp-3">
                         {campaign.description}
                       </p>
@@ -96,7 +96,7 @@ export default function FeaturedCampaigns({ campaigns, loading, error, className
                         {campaign.location?.city}, {campaign.location?.country}
                       </span>
                     </div>
-                    <h3 className="font-bold text-xl mb-2">{campaign.name}</h3>
+                    <h3 className="font-semibold text-xl mb-2">{campaign.name}</h3>
                     <p className="text-sm text-gray-600 mb-4 line-clamp-2">
                       {campaign.description}
                     </p>

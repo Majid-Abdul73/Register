@@ -152,7 +152,7 @@ export default function Navbar({
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg mt-2 py-4 px-4">
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg -mt-5 py-4 px-4">
             <div className="flex flex-col space-y-4">
               {links.map((link) => (
                 <Link
@@ -188,14 +188,14 @@ export default function Navbar({
                 <div className="flex flex-col space-y-2">
                   <Link
                     to="/register"
-                    className="text-md px-4 py-1 rounded-3xl text-white transition-colors bg-register-green hover:bg-register-green/90 text-center"
+                    className="text-md px-4 py-2 rounded-2xl text-white transition-colors bg-register-green hover:bg-register-green/90 text-center"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Sign Up
                   </Link>
                   <Link
                     to="/login"
-                    className="text-md px-4 py-1 rounded-3xl text-white transition-colors bg-black hover:bg-black/90 text-center"
+                    className="text-md px-4 py-2 rounded-2xl text-white transition-colors bg-black hover:bg-black/90 text-center"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Login

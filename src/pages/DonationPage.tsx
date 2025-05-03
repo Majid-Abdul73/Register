@@ -36,10 +36,6 @@ export default function DonationPage() {
           variant="transparent" 
           className="fixed top-0 left-0 right-0 z-50"
           customLinks={[
-            // { to: "/campaigns", text: "Campaigns" },
-            // { to: "/#", text: "How It Works" },
-            // { to: "/#", text: "About Register" }
-
             { to: "/campaigns", text: "Campaigns" },
             { to: "/how-it-works", text: "How it Works" },
             { to: "/about-us", text: "About Register" }
@@ -47,20 +43,21 @@ export default function DonationPage() {
         />
       </Suspense>
 
-      <div className="max-w-2xl mx-auto px-4 py-8 mt-20">
-        {/* Back Button */}
+        <div className='absolute px-6 p-10'>
         <button 
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-gray-600 mb-6"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-          Campaign
-        </button>
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-4 text-gray-600 mb-6"
+          >
+            <img src="/images/back.svg" alt="" 
+            className='h-4 w-2'
+            />
+            Campaign
+          </button>
+        </div>
 
+      <div className="max-w-2xl mx-auto px-4 py-32 mt-20">      
         {/* Main Content */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm">
+        <div className="bg-white rounded-2xl px-6 shadow-sm">
           {/* Campaign Image */}
           <div className="h-48 rounded-xl overflow-hidden mb-6">
             <img
@@ -70,15 +67,16 @@ export default function DonationPage() {
             />
           </div>
 
+        <div className='md:p-20 md:-mt-24'>
           {/* Supporting Text */}
-          <div className="text-center mb-8">
-            <h2 className="text-register-green font-medium mb-1">You're supporting</h2>
+          <div className="mb-8 border-b-2 py-5">
+            <h2 className="text-register-green font-semibold text-2xl mb-1">You're supporting</h2>
             <p className="text-gray-900">{campaign.name}</p>
           </div>
 
           {/* Donation Amount Selection */}
           <div className="space-y-6">
-            <h3 className="text-center font-medium">Enter your donation</h3>
+            <h3 className="text-2xl font-semibold text-register-green">Enter your donation</h3>
             
             {/* Predefined Amounts */}
             <div className="grid grid-cols-4 gap-3">
@@ -86,7 +84,7 @@ export default function DonationPage() {
                 <button
                   key={amount}
                   onClick={() => {
-                    setSelectedAmount(amount);
+                    setSelectedAmount(selectedAmount === amount ? null : amount);
                     setCustomAmount('');
                   }}
                   className={`py-2 rounded-lg border ${
@@ -110,15 +108,18 @@ export default function DonationPage() {
                   setCustomAmount(e.target.value);
                   setSelectedAmount(null);
                 }}
-                placeholder="00"
+                placeholder={selectedAmount ? selectedAmount.toString() : ".00"}
                 className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-register-green/20 focus:border-register-green"
               />
             </div>
 
             {/* Description */}
-            <div className="bg-gray-50 p-4 rounded-lg mb-8">
-              <p className="text-sm text-gray-600">
-                Your donation will support {campaign.name} in their mission to provide better educational facilities.
+            <div className="py-4 rounded-lg mb-8">
+              <h1 className='mb-2'>Lorem ipsum </h1>
+              <p className="text-md text-gray-600">
+                {/* Your donation will support {campaign.name} in their mission to provide better educational facilities. */}
+                Lorem ipsum dolor sit amet consectetur. Ac lectus urna cras mattis aliquam. 
+                Quam tortor facilisi varius molestie ut quam sit euismod maecenas. 
               </p>
             </div>
 
@@ -169,9 +170,9 @@ export default function DonationPage() {
 
             {/* Payment Details Form - Show only when stripe is selected */}
             {paymentMethod === 'stripe' && (
-              <div className="space-y-4 mt-6">
+              <div className="space-y-4 mt-6 border p-8 rounded-xl">
                 <div>
-                  <label className="block text-sm mb-1">Email Address</label>
+                  <label className="block text-ms font-medium mb-1">Email Address</label>
                   <input
                     type="email"
                     value={email}
@@ -181,7 +182,7 @@ export default function DonationPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm mb-1">Full name</label>
+                  <label className="block text-sm font-medium mb-1">Full name</label>
                   <input
                     type="text"
                     value={name}
@@ -191,7 +192,7 @@ export default function DonationPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm mb-1">Card Number</label>
+                  <label className="block text-sm font-medium mb-1">Card Number</label>
                   <input
                     type="text"
                     placeholder="9304 XXXX XXXX"
@@ -200,7 +201,7 @@ export default function DonationPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm mb-1">MM/YY</label>
+                    <label className="block text-sm font-medium mb-1">MM/YY</label>
                     <input
                       type="text"
                       placeholder="06/2025"
@@ -208,7 +209,7 @@ export default function DonationPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm mb-1">CVV</label>
+                    <label className="block text-sm font-medium mb-1">CVV</label>
                     <input
                       type="text"
                       placeholder="XXX"
@@ -217,7 +218,7 @@ export default function DonationPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm mb-1">Name on Card</label>
+                  <label className="block text-sm font-medium mb-1">Name on Card</label>
                   <input
                     type="text"
                     placeholder="9304 XXXX XXXX"
@@ -228,12 +229,19 @@ export default function DonationPage() {
             )}
 
             {/* Total Amount */}
-            <div className="border-t pt-6 mt-6">
+            <div className="pt-12">
               <div className="flex justify-between items-center mb-6">
-                <span className="text-gray-600">Your Total Donation</span>
+                <span className="text-gray-600 font-semibold text-xl">Your Total Donation</span>
                 <span className="text-xl font-semibold">
                   ${selectedAmount || customAmount || '0.00'}
                 </span>
+              </div>
+              
+              {/* Description */}
+              <div className="py-8 text-gray-500 font-medium">
+              <h1>Lorem ipsum dolor sit amet consectetur. Ac lectus urna cras mattis aliquam. 
+                Quam tortor facilisi varius molestie ut quam sit euismod maecenas. 
+              </h1>
               </div>
 
               <button
@@ -244,6 +252,7 @@ export default function DonationPage() {
               </button>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
