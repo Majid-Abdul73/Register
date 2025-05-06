@@ -90,6 +90,9 @@ const ChallengePage = () => {
           <div className="col-span-1 lg:col-span-8">
             {/* Campaign Images */}
             <div className="relative rounded-xl overflow-hidden mb-2">
+              <span className="absolute top-4 left-4 z-10 bg-green-500 text-white px-3 py-1 rounded-full text-sm">
+                {campaign.category}
+              </span>
               <img
                 src={campaign.mediaUrl || ''}
                 alt=""
@@ -114,7 +117,7 @@ const ChallengePage = () => {
             </div>
 
             {/* Campaign Info */}
-            <div className="space-y-4 mb-6 -mt-8 py-12">
+            <div className="space-y-4 mb-6 -mt-8 py-12 max-w-3xl">
               <div className="flex flex-wrap items-center gap-4 text-register-green">
                 <div className="flex items-center gap-2">
                   <img src="/images/location.svg" alt="" className="w-5 h-5" />
@@ -122,21 +125,20 @@ const ChallengePage = () => {
                 </div>
               </div>
               
-              <h1 className="text-xl md:text-2xl font-bold">{campaign.name}</h1>
+              <h1 className="text-xl md:text-3xl font-bold">{campaign.name}</h1>
 
               <span className="absolute bg-green-500 text-white px-2 rounded-full text-xs py-2">
                 {campaign.category}
               </span>
-
             </div>
 
             {/* Description and Updates sections */}
-            <div className="border-t-2 border-b-2 py-8 md:py-12">
+            <div className="border-t-2 border-b-2 py-8 md:py-12 max-w-2xl">
               <p className="text-sm md:text-base text-gray-600">{campaign.description}</p>
             </div>
 
             {/* Update section */}
-            <div className="border-t- border-b-2 py-8 md:py-12">
+            <div className="border-t- border-b-2 py-8 md:py-12 max-w-2xl">
               <div className="mb-6">
                 <h2 className="text-xl font-bold mb-4">Updates</h2>
                 <div className="space-y-4">
@@ -171,24 +173,9 @@ const ChallengePage = () => {
               </div>
             </div>
 
-            {/* Mobile Action Buttons - Show only on mobile */}
-            <div className="grid grid-cols-2 gap-3 my-6 lg:hidden">
-              <button 
-                onClick={() => navigate(`/donation/${campaign.id}`)}
-                className="bg-register-green text-white py-3 rounded-lg font-medium text-sm"
-              >
-                Donate
-              </button>
-              <button 
-                onClick={() => setIsShareOpen(true)}
-                className="bg-black text-white py-3 rounded-lg font-medium text-sm"
-              >
-                Share
-              </button>
-            </div>
 
             {/* Organizer Section */}
-            <div className="py-8">
+            <div className="py-8 max-w-2xl">
               <h2 className="text-xl font-bold mb-4">Organizer</h2>
               <div className="flex items-center gap-4 mb-8">
                 <img 
@@ -214,7 +201,7 @@ const ChallengePage = () => {
                 className="inline-flex items-center justify-between text-register-green py-2 px-3 rounded-lg bg-register-green-light text-md w-[200px]"
               >
                 <span>View School Profile</span>
-                <img src="/images/greater.svg" alt="" className="w-[15px] h-[15px]" />
+                <img src="/images/greater.svg" alt="" className="w-[15px] h-[15px]"/>
               </button>
 
               <SchoolProfile
@@ -233,11 +220,13 @@ const ChallengePage = () => {
                 }}
               />
             </div>
+            {/* <div className='border-b-2 py-8 max-w-5xl'></div> */}
+
           </div>
 
           {/* Part 3 - Donation Info */}
           <div className="col-span-1 lg:col-span-4">
-            <div className="bg-white rounded-xl p-4 md:p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
+            <div className="bg-[#FFFFFF] rounded-xl p-4 md:p-6 shadowlg shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
               {/* Amount Raised */}
               <div className="mb-6">
                 <h2 className="text-2xl font-bold mb-1">
@@ -277,6 +266,7 @@ const ChallengePage = () => {
               </div>
 
               {/* Action Buttons */}
+              <div className='border-b-2'>
               <button 
                 onClick={() => navigate(`/donation/${campaign.id}`)}
                 className="w-full bg-register-green text-white py-3 rounded-lg font-medium mb-3" >
@@ -285,9 +275,10 @@ const ChallengePage = () => {
 
               <button 
                 onClick={() => setIsShareOpen(true)} 
-                className="w-full bg-black text-white py-3 rounded-lg font-medium mb-6" >
+                className="w-full bg-black text-white py-3 rounded-lg font-medium mb-10" >
                 Share
               </button>
+              </div>
               
               {/* QuickShare component: */}
               <QuickShare
@@ -299,7 +290,7 @@ const ChallengePage = () => {
                 }}
               />
               {/* Recent Donors */}
-              <div>
+              <div className='py-6'>
                 <div className="flex items-center gap-2 mb-4">
                   <svg className="w-5 h-5 text-register-green" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -330,20 +321,37 @@ const ChallengePage = () => {
         <div className="mt-12 md:mt-24 border-t-2 py-8 md:py-12">
           <h2 className="text-xl md:text-2xl font-semibold mb-6 md:mb-8">Other Campaigns</h2>
           <div className="relative">
-            <div className="overflow-x-auto scrollbar-hide -mx-4 px-4">
+            <div className="overflow-x-auto scrollbar-hid -mx-4 px-4">
               <div className="flex gap-4 md:gap-6" style={{ width: 'max-content' }}>
                 {data?.filter(c => c.id !== campaign.id).map((otherCampaign) => (
-                  <div key={otherCampaign.id} className="bg-white rounded-xl overflow-hidden shadow-sm" style={{ width: '300px', minWidth: '300px', maxWidth: '400px' }}>
-                    <div className="h-36 md:h-48">
-                      <img
-                        src={otherCampaign.mediaUrl}
-                        alt=""
-                        className="w-full h-full object-cover"
-                      />
+                  <div key={otherCampaign.id} className="bg-white p-2 rounded-xl shadow-[0_2px_15px_-3px_rgba(170,170,170,0.3),0_10px_20px_-2px_rgba(170,170,170,0.25)] flex" style={{ width: '500px', minWidth: '500px' }}>
+                    {/* Left side - Image */}
+                    <div className="w-1/2">
+                      <div className="h-full">
+                        <img
+                          src={otherCampaign.mediaUrl}
+                          alt=""
+                          className="w-full h-ful h[180px]  rounded-md object-cover"
+                        />
+                        {/* <span className="absolute top-4 left-4 bg-green-500 text-white p-1 rounded-full text-sm">
+                          {otherCampaign.category}
+                        </span> */}
+                      </div>
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-medium mb-2 text-sm md:text-base">{otherCampaign.name}</h3>
-                      <div className="flex justify-between text-xs md:text-sm">
+                    
+                    {/* Right side - Content */}
+                    <div className="w-1/2 h-full px-4">
+                      <div className="flex items-center gap-2 mb-2 text-register-green">
+                        <img src="/images/location.svg" alt="" className="w-4 h-4" />
+                        <span className="text-sm">
+                          {otherCampaign.location?.city}, {otherCampaign.location?.country}
+                        </span>
+                      </div>
+                      <h3 className="font-medium mb-1 text-sm md:text-base line-clamp-2">{otherCampaign.name}</h3>
+                      <p className="text-sm text-gray-600 mb-2 line-clamp-2">
+                        {otherCampaign.description}
+                      </p>
+                      <div className="flex justify-between text-xs md:text-sm font-medium">
                         <span>Goal: ${otherCampaign.goal?.toLocaleString()}</span>
                         <span>Raised: ${otherCampaign.amountRaised?.toLocaleString()}</span>
                       </div>

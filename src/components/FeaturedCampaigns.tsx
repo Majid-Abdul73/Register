@@ -78,7 +78,7 @@ export default function FeaturedCampaigns({ campaigns, loading, error, className
                         <img 
                           src={'/avatar.svg'} 
                           alt="" 
-                          className="w-6 h-6 rounded-full"
+                          className="w-6 h-6 rounded-full shadow p-0.5 bg-[#D9D9D9]"
                         />
                         <span className="text-sm font-semibold text-gray-600">
                           {campaign.organizer?.name || 'Anonymous'}
