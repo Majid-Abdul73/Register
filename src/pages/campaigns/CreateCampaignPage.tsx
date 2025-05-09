@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import DashboardHeader from '../../components/DashboardHeader';
-import CampaignForm from '../../components/CampaignForm';
+import CampaignForm from '../../components/campaign/CampaignForm';
 import Sidebar from '../../components/Sidebar';
 
 export default function CreateCampaignPage() {
