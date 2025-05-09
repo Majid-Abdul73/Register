@@ -7,6 +7,7 @@ interface ContactSchoolProps {
   recipient: {
     name: string;
     role: string;
+    email?: string;
   };
 }
 
@@ -16,12 +17,40 @@ export default function ContactSchool({ isOpen, onClose, recipient }: ContactSch
     email: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
-    onClose();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/sendContactEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          recipient: {
+            name: recipient.name,
+            role: recipient.role,
+            email: recipient.email
+          }
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      onClose();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to send message');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -118,11 +147,16 @@ export default function ContactSchool({ isOpen, onClose, recipient }: ContactSch
                     />
                   </div>
 
+                  {error && (
+                    <p className="text-red-500 text-sm">{error}</p>
+                  )}
+
                   <button
                     type="submit"
-                    className="bg-register-green text-white p-2 rounded-lg font-medium hover:bg-green-600 transition-colors"
+                    disabled={loading}
+                    className="bg-register-green text-white p-2 rounded-lg font-medium hover:bg-green-600 transition-colors w-full"
                   >
-                    Send a Message
+                    {loading ? 'Sending...' : 'Send a Message'}
                   </button>
                 </form>
               </Dialog.Panel>
