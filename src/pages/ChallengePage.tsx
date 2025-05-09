@@ -5,8 +5,9 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useIndexedDB } from '../hooks/useIndexedDB';
 import { useCampaignData } from '../components/Data';
-import QuickShare from '../components/QuickShare';
-import SchoolProfile from '../components/SchoolProfile';
+
+import QuickShare from '../components/modal/QuickShare';
+import SchoolProfile from '../components/modal/SchoolProfile';
 
 const Navbar = lazy(() => import('../components/Navbar'));
 
@@ -76,11 +77,9 @@ const ChallengePage = () => {
         {/* Back Button */}
         <button 
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 mb-6 text-gray-600"
+          className="flex items-center gap-4 mb-6 text-gray-600"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
+          <img src="/images/back.svg" alt="" className='w-2'/>
           All Campaigns
         </button>
 
@@ -90,9 +89,6 @@ const ChallengePage = () => {
           <div className="col-span-1 lg:col-span-8">
             {/* Campaign Images */}
             <div className="relative rounded-xl overflow-hidden mb-2">
-              <span className="absolute top-4 left-4 z-10 bg-green-500 text-white px-3 py-1 rounded-full text-sm">
-                {campaign.category}
-              </span>
               <img
                 src={campaign.mediaUrl || ''}
                 alt=""
@@ -208,7 +204,7 @@ const ChallengePage = () => {
                 isOpen={isProfileOpen}
                 onClose={() => setIsProfileOpen(false)}
                 school={{
-                  name: campaign.name,
+                  name: campaign.schoolName,
                   location: `${campaign.location?.city}, ${campaign.location?.country}`,
                   address: campaign.location?.address || '',
                   totalStudents: campaign.totalStudents || 0,

@@ -55,7 +55,7 @@ export default function QuickShare({ isOpen, onClose, campaign }: QuickShareProp
                   <Dialog.Title className="text-2xl font-semibold text-register-green">
                     Quick Share
                   </Dialog.Title>
-                  <button onClick={onClose} className="text-gray-400 hover:text-gray-500">
+                  <button onClick={onClose} className="text-gray-400 border-4 rounded-full hover:text-gray-500">
                     <span className="sr-only">Close</span>
                     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -64,13 +64,16 @@ export default function QuickShare({ isOpen, onClose, campaign }: QuickShareProp
                 </div>
 
                 <div className="space-y-6">
-                  <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center justify-between border-2 gap-2 p-2 bg-gray-50 rounded-lg">
+                    <div className='grid'>
+                    {/* <div className='text-sm'>Your unique link</div> */}
                     <input
                       type="text"
                       readOnly
                       value={campaign.url}
-                      className="flex-1 bg-transparent text-sm"
+                      className="flex-1 pxc-0 bg-transparent border-none text-sm"
                     />
+                    </div>
                     <button
                       onClick={handleCopy}
                       className="text-sm font-medium flex items-center gap-1"
@@ -83,16 +86,29 @@ export default function QuickShare({ isOpen, onClose, campaign }: QuickShareProp
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-medium mb-2">Reach more donors by sharing</h3>
+                    <h3 className="text-xl font-medium mb-2">Reach more donors by sharing</h3>
                     <p className="text-gray-600 text-sm mb-6">
                       Help spread the word about this campaign by sharing with your friends and family.
                     </p>
                     <div className="grid grid-cols-2 gap-3">
-                      <button className="flex items-center gap-2 bg-[#25D366]/10 py-3 px-4 rounded-lg">
+                      <button 
+                        onClick={() => {
+                          const url = encodeURIComponent(campaign.url);
+                          const text = encodeURIComponent(`${campaign.name} campaign and help make a difference. Learn more at:`);
+                          window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank', 'width=600,height=400');
+                        }}
+                        className="flex items-center gap-2 bg-[#1877F2]/10 py-3 px-4 rounded-lg hover:bg-[#1877F2]/20 transition-colors"
+                      >
                         <img src="/images/facebook.svg" alt="" className="" />
                         Facebook
                       </button>
-                      <button className="flex items-center gap-2 bg-[#25D366]/10 py-3 px-4 rounded-lg">
+                      <button 
+                        onClick={() => {
+                          const text = encodeURIComponent(`Check out ${campaign.name} campaign: ${campaign.url} `);
+                          window.open(`https://wa.me/?text=${text}`, '_blank');
+                        }}
+                        className="flex items-center gap-2 bg-[#25D366]/10 py-3 px-4 rounded-lg hover:bg-[#25D366]/20 transition-colors"
+                      >
                         <img src="/images/whatsapp.svg" alt="" className="" />
                         WhatsApp
                       </button>

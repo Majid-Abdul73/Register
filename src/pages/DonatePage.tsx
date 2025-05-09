@@ -3,7 +3,7 @@ import { lazy, Suspense, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useCampaignData } from '../components/Data';
-import FeaturedCampaigns from '../components/FeaturedCampaigns';
+import FeaturedCampaigns from '../components/campaign/FeaturedCampaigns';
 
 const Navbar = lazy(() => import('../components/Navbar'));
 

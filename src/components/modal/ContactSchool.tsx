@@ -52,7 +52,7 @@ export default function ContactSchool({ isOpen, onClose, recipient }: ContactSch
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 shadow-xl transition-all">
                 <div className="absolute right-4 top-4">
-                  <button onClick={onClose} className="text-gray-400 hover:text-gray-500">
+                  <button onClick={onClose} className="text-gray-400 border-4  rounded-full hover:text-gray-500">
                     <span className="sr-only">Close</span>
                     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -120,7 +120,7 @@ export default function ContactSchool({ isOpen, onClose, recipient }: ContactSch
 
                   <button
                     type="submit"
-                    className="w-full bg-register-green text-white py-3 rounded-lg font-medium hover:bg-green-600 transition-colors"
+                    className="bg-register-green text-white p-2 rounded-lg font-medium hover:bg-green-600 transition-colors"
                   >
                     Send a Message
                   </button>

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useCampaignData } from '../components/Data';
-import FeaturedCampaigns from '../components/FeaturedCampaigns';
+import FeaturedCampaigns from '../components/campaign/FeaturedCampaigns';
 
 // Lazy load components
 const Navbar = lazy(() => import('../components/Navbar'));

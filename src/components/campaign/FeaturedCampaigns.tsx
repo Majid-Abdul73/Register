@@ -1,4 +1,4 @@
-import { Campaign } from '../types/campaign';
+import { Campaign } from '../../types/campaign';
 import { Link } from 'react-router-dom';
 
 interface FeaturedCampaignsProps {
